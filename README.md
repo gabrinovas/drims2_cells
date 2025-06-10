@@ -1,4 +1,4 @@
-### drims2_description
+### drims2_cells
 
 This repository contains the robot descriptions, MoveIt configurations, and controller settings for the UR5e and ABB YuMi robots used in the DRIMS2 Summer School 2025.
 

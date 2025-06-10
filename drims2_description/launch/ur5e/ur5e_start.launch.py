@@ -11,13 +11,13 @@ def generate_launch_description():
   return LaunchDescription(launch_args + [OpaqueFunction(function=launch_setup)])
 
 def launch_setup(context):
-  launch_moveit_path = PathJoinSubstitution([FindPackageShare('drims2_description'), 'launch', 'ur5e_moveit.launch.py'])
+  launch_moveit_path = PathJoinSubstitution([FindPackageShare('drims2_description'), 'launch', 'ur5e', 'ur5e_moveit.launch.py'])
   launch_moveit_and_robot_description = IncludeLaunchDescription(
     launch_description_source=PythonLaunchDescriptionSource(launch_moveit_path),
     launch_arguments=[('fake', LaunchConfiguration("fake"))]
   )
 
-  launch_controllers_path = PathJoinSubstitution([FindPackageShare('drims2_description'), 'launch', 'ur5e_control.launch.py'])
+  launch_controllers_path = PathJoinSubstitution([FindPackageShare('drims2_description'), 'launch', 'ur5e', 'ur5e_control.launch.py'])
   launch_controllers = IncludeLaunchDescription(
     launch_description_source=PythonLaunchDescriptionSource(launch_controllers_path),
     launch_arguments=[('fake', LaunchConfiguration("fake"))]

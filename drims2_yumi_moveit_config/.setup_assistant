@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: drims2_description
+    relative_path: urdf/yumi/yumi_cell.urdf.xacro
+  srdf:
+    relative_path: config/platform.srdf
+  package_settings:
+    author_name: Cesare Tonola
+    author_email: cesare.tonola@cnr.it
+    generated_timestamp: 1749479278
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

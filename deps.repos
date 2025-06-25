@@ -1,0 +1,29 @@
+repositories:
+  abb_libs/abb_egm_rws_managers:
+    type: git
+    url: https://github.com/MerlinLaboratory/abb_egm_rws_managers.git
+    version: master
+  abb_libs/abb_libegm:
+    type: git
+    url: https://github.com/ros-industrial/abb_libegm.git
+    version: master
+  abb_libs/abb_librws_2.0:
+    type: git
+    url: https://github.com/MerlinLaboratory/abb_librws_2.0.git
+    version: marco-sg-control
+  abb_libs/abb_ros2_msgs:
+    type: git
+    url: https://github.com/gbartyzel/abb_ros2_msgs.git
+    version: rolling
+  abb_omnicore_ros2:
+    type: git
+    url: https://github.com/MerlinLaboratory/abb_omnicore_ros2.git
+    version: marco
+  ros2_robotiq_gripper:
+    type: git
+    url: https://github.com/PickNikRobotics/ros2_robotiq_gripper.git
+    version: humble
+  serial:
+    type: git
+    url: https://github.com/tylerjw/serial.git
+    version: ros2

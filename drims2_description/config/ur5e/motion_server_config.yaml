@@ -1,0 +1,11 @@
+motion_server_node:
+  ros__parameters:
+    move_group_name: "manipulator"
+    target_frame: "tool0"
+    
+    cartesian_planner_config:
+      planning_pipeline: "pilz_industrial_motion_planner"
+      planner_id: "LIN"
+      planning_time: 50.0
+      max_velocity_scaling_factor: 0.05
+      max_acceleration_scaling_factor: 0.05

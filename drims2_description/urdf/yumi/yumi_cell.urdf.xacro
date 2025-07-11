@@ -122,6 +122,14 @@
     <child link="gripper_base" />
     <origin xyz="0 0 0.007" rpy="0 0 ${radians(180)}" />
   </joint>
+   
+  <link name="tip"/>
+
+  <joint type="fixed" name="grasp_link_to_tip">
+    <parent link="grasp_link" />
+    <child link="tip" />
+    <origin xyz="0 0 -0.015" rpy="0 0 0" />
+  </joint>
 
   <!-- ros2_control -->
   <xacro:include filename="$(find yumi_single_arm_support)/urdf/yumi_single_arm.ros2_control.xacro" />
@@ -138,7 +146,8 @@
     <xacro:include filename="$(find yumi_single_arm_support)/urdf/yumi_gripper.ros2_control.xacro" />
     <xacro:yumi_gripper_ros2_control
       name="GripperInterfaceHardware"
-      prefix=""/>
+      prefix=""
+      use_fake_hardware="${use_fake_hardware}"/>
   </xacro:if>  
 
    <joint name="table_top_to_base_link" type="fixed">

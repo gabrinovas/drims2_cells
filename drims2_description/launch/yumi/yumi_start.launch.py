@@ -1,5 +1,5 @@
 from launch.launch_description import LaunchDescription
-from launch.actions import OpaqueFunction, IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import OpaqueFunction, IncludeLaunchDescription, DeclareLaunchArgument, TimerAction
 from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.substitutions import FindPackageShare
@@ -23,7 +23,19 @@ def launch_setup(context):
     launch_arguments=[('fake', LaunchConfiguration("fake"))]
   )
 
+  motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "yumi", "yumi_motion_server.launch.py"])
+  motion_server_launch = IncludeLaunchDescription(
+      launch_description_source = PythonLaunchDescriptionSource(motion_server_path),
+      launch_arguments = [('fake', LaunchConfiguration("fake"))]
+  )
+
+  delayed_motion_server = TimerAction(
+      period=8.0,
+      actions=[motion_server_launch]
+  )
+
   return [
     launch_moveit_and_robot_description,
-    launch_controllers
+    launch_controllers,
+    delayed_motion_server
   ]

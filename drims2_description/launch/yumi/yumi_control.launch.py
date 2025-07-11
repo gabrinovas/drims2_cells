@@ -75,6 +75,14 @@ def generate_launch_description():
         output='screen',
     )
 
+    gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["gripper_action_controller", 
+                "--controller-manager", "/controller_manager"],
+        output='screen',
+    )
+
     restart_rapid_node = Node(
         package="abb_utils",
         executable="restart_rapid",
@@ -114,6 +122,7 @@ def generate_launch_description():
         robot_state_publisher_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
+        gripper_controller_spawner,
         rws_client_node 
     ]
 

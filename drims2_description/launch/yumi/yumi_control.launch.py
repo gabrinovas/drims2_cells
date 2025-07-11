@@ -81,6 +81,7 @@ def generate_launch_description():
         arguments=["gripper_action_controller", 
                 "--controller-manager", "/controller_manager"],
         output='screen',
+        condition=IfCondition(use_fake_hardware)
     )
 
     restart_rapid_node = Node(
@@ -115,6 +116,15 @@ def generate_launch_description():
         condition=UnlessCondition(use_fake_hardware)
     )
 
+    smart_gripper_action_control = Node(
+        package="smart_gripper_action_control",
+        executable="smart_gripper_action_control",
+        name="smart_gripper_action_control",
+        output="screen",
+        namespace="smart_gripper_action_control",
+        condition=UnlessCondition(use_fake_hardware)
+    )
+
     nodes = [
         restart_rapid_node,
         control_node_delayed,
@@ -123,6 +133,7 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         gripper_controller_spawner,
+        smart_gripper_action_control,
         rws_client_node 
     ]
 

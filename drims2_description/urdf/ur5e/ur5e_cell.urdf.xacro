@@ -71,6 +71,15 @@
             <color rgba="0.4 0.2 0 1"/>
          </material>
       </visual>
+      <collision>
+         <geometry>
+            <box size="${table_length} ${table_width} ${table_thickness}"/>
+         </geometry>
+         <origin xyz="0 0 -${table_thickness/2}" rpy="0 0 0"/>
+         <material name="brown">
+            <color rgba="0.4 0.2 0 1"/>
+         </material>
+      </collision>
    </link>
 
    <joint name="world_to_table" type="fixed">
@@ -83,13 +92,22 @@
       <link name="${name}">
          <visual>
             <geometry>
-            <box size="${leg_width} ${leg_width} ${z}"/>
+               <box size="${leg_width} ${leg_width} ${z}"/>
             </geometry>
             <origin xyz="0 0 ${z / 2}" rpy="0 0 0"/>
             <material name="black">
-            <color rgba="0.1 0.1 0.1 1"/>
+               <color rgba="0.1 0.1 0.1 1"/>
             </material>
          </visual>
+         <collision>
+            <geometry>
+               <box size="${leg_width} ${leg_width} ${z}"/>
+            </geometry>
+            <origin xyz="0 0 ${z / 2}" rpy="0 0 0"/>
+            <material name="black">
+               <color rgba="0.1 0.1 0.1 1"/>
+            </material>
+      </collision>
       </link>
       <joint name="joint_${name}" type="fixed">
          <parent link="world"/>
@@ -112,7 +130,7 @@
          </geometry>
          <origin xyz="${xyz}" rpy="0 0 0"/>
          <material name="red_transparent">
-         <color rgba="1.0 0.0 0.0 0.3"/>
+         <color rgba="1.0 1.0 0.5 0.3"/>
          </material>
       </visual>
       <collision>
@@ -190,15 +208,31 @@
       <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 0"/>
    </xacro:ur_robot>
 
-    <!-- Robotiq 2f-140 gripper -->
-    <xacro:arg name="com_port" default="/dev/ttyUSB0" />
+    <!-- Robotiq Hand-e gripper -->
+   <xacro:arg name="com_port" default="/dev/ttyUSB0" />
+   <xacro:include filename="$(find robotiq_hande_description)/urdf/robotiq_hande_gripper.xacro" />
 
-    <!-- Import macros -->
-    <xacro:include filename="$(find robotiq_description)/urdf/robotiq_2f_140_macro.urdf.xacro" />
+   <xacro:robotiq_hande_gripper
+     name="robotiq_hande_gripper"
+     prefix=""
+     parent="tool0"
+     grip_pos_min="0.0"
+     grip_pos_max="0.025"
+     tty="$(arg com_port)"
+     baudrate="115200"
+     parity="N"
+     data_bits="8"
+     stop_bit="1"
+     slave_id="9"
+     use_fake_hardware="$(arg use_fake_hardware)"
+   />
+   
+   <!-- Robotiq 2f-140 gripper -->
+    <!-- <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hande_gripper.urdf.xacro" />
 
     <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="tool0" use_fake_hardware="$(arg use_fake_hardware)" com_port="$(arg com_port)">
         <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:robotiq_gripper>
+    </xacro:robotiq_gripper> -->
 
    <link name="tip"/>
 

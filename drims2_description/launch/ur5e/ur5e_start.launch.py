@@ -29,13 +29,16 @@ def launch_setup(context):
       launch_arguments = [('fake', LaunchConfiguration("fake"))]
   )
 
-  delayed_motion_server = TimerAction(
-      period=8.0,
+  delayed_control_server = TimerAction(
+      period=2.0,
       actions=[motion_server_launch]
   )
 
   return [
+      # motion_server_launch,
     launch_moveit_and_robot_description_launch,
     launch_controllers_launch,
-    delayed_motion_server
+    delayed_control_server
+    # launch_controllers_launch,
+    # delayed_motion_server
   ]

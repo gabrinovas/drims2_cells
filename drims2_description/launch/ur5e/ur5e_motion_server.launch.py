@@ -39,7 +39,7 @@ def get_moveit_configs(use_fake_hardware_str: str):
         MoveItConfigsBuilder('manipulator', package_name='drims2_ur5e_moveit_config')
         .robot_description(file_path=robot_description_path, mappings=robot_description_args)
         .robot_description_semantic(file_path=srdf_path)
-        .planning_scene_monitor(publish_robot_description=False,
+        .planning_scene_monitor(publish_robot_description=True,
                                 publish_robot_description_semantic=True,
                                 publish_planning_scene=True)
         .planning_pipelines(default_planning_pipeline='ompl', pipelines=['ompl', 'chomp', 'pilz_industrial_motion_planner'])

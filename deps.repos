@@ -27,3 +27,11 @@ repositories:
     type: git
     url: https://github.com/tylerjw/serial.git
     version: ros2
+  robotiq_hande_driver:
+    type: git
+    url: https://github.com/AGH-CEAI/robotiq_hande_driver.git
+    version: humble-devel
+  robotiq_hande_description:
+    type: git
+    url: https://github.com/AGH-CEAI/robotiq_hande_description
+    version: 2190af7c85569fc9a85f4b78096edd433c0dbad1

@@ -4,12 +4,12 @@ motion_server_node:
     end_effector_name: "tip"
     base_link_name: "base_link"
     joint_names:
-      - 'ur10e_shoulder_pan_joint'
-      - 'ur10e_shoulder_lift_joint'
-      - 'ur10e_elbow_joint'
-      - 'ur10e_wrist_1_joint'
-      - 'ur10e_wrist_2_joint'
-      - 'ur10e_wrist_3_joint'
+      - 'shoulder_pan_joint'
+      - 'shoulder_lift_joint'
+      - 'elbow_joint'
+      - 'wrist_1_joint'
+      - 'wrist_2_joint'
+      - 'wrist_3_joint'
 
     cartesian_max_step: 0.0025
     cartesian_fraction_threshold: 0.0

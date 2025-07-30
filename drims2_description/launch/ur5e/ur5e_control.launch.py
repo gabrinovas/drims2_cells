@@ -78,8 +78,8 @@ def launch_setup(context, *args, **kwargs):
     controller_manager_node,
     joint_state_broadcaster_spawner,
     joint_trajectory_controller,
-    robotiq_fake_controller_spawner,
     robot_state_publisher_node,
+    robotiq_fake_controller_spawner,
     robotiq_hande_urcap_launch
     ]
 

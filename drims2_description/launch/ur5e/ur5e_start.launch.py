@@ -7,6 +7,7 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
   launch_args = [
     DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"),
+    DeclareLaunchArgument(name="robot_ip", default_value="192.168.125.121", description="Robot ip"),
   ]
   return LaunchDescription(launch_args + [OpaqueFunction(function=launch_setup)])
 
@@ -20,7 +21,8 @@ def launch_setup(context):
   launch_controllers_path = PathJoinSubstitution([FindPackageShare('drims2_description'), 'launch', 'ur5e', 'ur5e_control.launch.py'])
   launch_controllers_launch  = IncludeLaunchDescription(
     launch_description_source = PythonLaunchDescriptionSource(launch_controllers_path),
-    launch_arguments = [('fake', LaunchConfiguration("fake"))]
+    launch_arguments = [('fake', LaunchConfiguration("fake")),
+                        ('robot_ip', LaunchConfiguration("robot_ip"))]
   )
 
   motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "ur5e", "ur5e_motion_server.launch.py"])

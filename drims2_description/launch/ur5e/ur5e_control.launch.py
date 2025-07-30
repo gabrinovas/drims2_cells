@@ -14,7 +14,9 @@ def launch_setup(context, *args, **kwargs):
           "urdf", "ur5e", "ur5e_cell.urdf.xacro"
       ]),
       " ", 
-      "use_fake_hardware:=", LaunchConfiguration("fake")
+      "use_fake_hardware:=", LaunchConfiguration("fake"),
+      " ",
+      "robot_ip:=", LaunchConfiguration("robot_ip"),
   ])
   robot_description = {
       'robot_description': ParameterValue(robot_description_content, value_type=str)
@@ -65,7 +67,7 @@ def launch_setup(context, *args, **kwargs):
     controller_manager_node,
     joint_state_broadcaster_spawner,
     joint_trajectory_controller,
-    robotiq_controller_spawner,
+    # robotiq_controller_spawner,
     robot_state_publisher_node,
     ]
 
@@ -74,6 +76,7 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
   launch_args = []
   launch_args.append(DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"))
+  launch_args.append(DeclareLaunchArgument(name="robot_ip", default_value="0.0.0.0", description="Robot ip"))
 
   ld = LaunchDescription(launch_args+[OpaqueFunction(function=launch_setup)])
     

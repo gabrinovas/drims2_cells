@@ -19,17 +19,17 @@
    <xacro:arg name="safety_k_position" default="20"/>
    <!-- ros2_control related parameters -->
    <xacro:arg name="headless_mode" default="false" />
-   <xacro:arg name="script_filename" default=""/>
-   <xacro:arg name="output_recipe_filename" default=""/>
-   <xacro:arg name="input_recipe_filename" default=""/>
+   <xacro:arg name="script_filename" default="$(find ur_client_library)/resources/external_control.urscript"/>
+   <xacro:arg name="input_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_input_recipe.txt"/>
+   <xacro:arg name="output_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_output_recipe.txt"/>
    <xacro:arg name="reverse_ip" default="0.0.0.0"/>
    <xacro:arg name="script_command_port" default="50004"/>
    <xacro:arg name="reverse_port" default="50001"/>
    <xacro:arg name="script_sender_port" default="50002"/>
    <xacro:arg name="trajectory_port" default="50003"/>
    <!--   tool communication related parameters-->
-   <xacro:arg name="use_tool_communication" default="false" />
-   <xacro:arg name="tool_voltage" default="0" />
+   <xacro:arg name="use_tool_communication" default="true" />
+   <xacro:arg name="tool_voltage" default="24" />
    <xacro:arg name="tool_parity" default="0" />
    <xacro:arg name="tool_baud_rate" default="115200" />
    <xacro:arg name="tool_stop_bits" default="1" />
@@ -209,7 +209,8 @@
    </xacro:ur_robot>
 
     <!-- Robotiq Hand-e gripper -->
-   <xacro:arg name="com_port" default="/dev/ttyUSB0" />
+   <xacro:arg name="com_port" default="/tmp/ttyUR" />
+   
    <xacro:include filename="$(find robotiq_hande_description)/urdf/robotiq_hande_gripper.xacro" />
 
    <xacro:robotiq_hande_gripper
@@ -224,9 +225,23 @@
      data_bits="8"
      stop_bit="1"
      slave_id="9"
-     use_fake_hardware="$(arg use_fake_hardware)"
+     use_fake_hardware="true"
    />
    
+   <!-- <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hand_e_macro.urdf.xacro"/>
+   <xacro:include filename="$(find robotiq_description)/urdf/hand_e.ros2_control.xacro"/>
+   <xacro:robotiq_hande prefix="" parent="tool0" >
+      <origin xyz="0 0 0" rpy="0 0 0" />
+   </xacro:robotiq_hande>
+   
+   <xacro:robotiq_hande_ros2_control
+      name="robotiq_hande"
+      prefix=""
+      use_mock_hardware="$(arg use_fake_hardware)" 
+      com_port="$(arg com_port)"
+      /> -->
+
+
    <!-- Robotiq 2f-140 gripper -->
     <!-- <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hande_gripper.urdf.xacro" />
 

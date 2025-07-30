@@ -21,8 +21,6 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-
-
 def generate_launch_description():
     drims2_description_pkg_dir = get_package_share_directory('drims2_description')
 

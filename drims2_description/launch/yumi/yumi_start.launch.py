@@ -7,6 +7,7 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
   launch_args = [
     DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"),
+    DeclareLaunchArgument(name="robot_ip", default_value="192.168.125.121", description="Robot ip"),
   ]
   return LaunchDescription(launch_args + [OpaqueFunction(function=launch_setup)])
 
@@ -20,7 +21,8 @@ def launch_setup(context):
   launch_controllers_path = PathJoinSubstitution([FindPackageShare('drims2_description'), 'launch', 'yumi', 'yumi_control.launch.py'])
   launch_controllers = IncludeLaunchDescription(
     launch_description_source=PythonLaunchDescriptionSource(launch_controllers_path),
-    launch_arguments=[('fake', LaunchConfiguration("fake"))]
+    launch_arguments=[('fake', LaunchConfiguration("fake")),
+                      ('rws_ip', LaunchConfiguration("robot_ip"))]
   )
 
   motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "yumi", "yumi_motion_server.launch.py"])
@@ -30,7 +32,7 @@ def launch_setup(context):
   )
 
   delayed_motion_server = TimerAction(
-      period=8.0,
+      period=2.0,
       actions=[motion_server_launch]
   )
 

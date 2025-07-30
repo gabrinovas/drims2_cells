@@ -21,61 +21,6 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-from moveit_configs_utils import MoveItConfigsBuilder
-
-
-def get_moveit_configs(use_fake_hardware_str: str):
-    srdf_path = os.path.join(get_package_share_directory('drims2_yumi_moveit_config'), 'config', 'platform.srdf')
-    joint_limits_path = os.path.join(get_package_share_directory('drims2_yumi_moveit_config'), 'config', 'joint_limits.yaml')
-    moveit_controllers_path = os.path.join(get_package_share_directory('drims2_yumi_moveit_config'), 'config', 'moveit_controllers.yaml')
-    pilz_limits_path = os.path.join(get_package_share_directory('drims2_yumi_moveit_config'), 'config', 'pilz_cartesian_limits.yaml')
-    robot_description_path = os.path.join(get_package_share_directory('drims2_description'), 'urdf', 'yumi', 'yumi_cell.urdf.xacro') 
-
-    robot_description_args = {
-        "use_fake_hardware": use_fake_hardware_str
-    }
-
-    moveit_config = (
-        MoveItConfigsBuilder('manipulator', package_name='drims2_yumi_moveit_config')
-        .robot_description(file_path=robot_description_path, mappings=robot_description_args)
-        .robot_description_semantic(file_path=srdf_path)
-        .planning_scene_monitor(publish_robot_description=False,
-                                publish_robot_description_semantic=True,
-                                publish_planning_scene=True)
-        .planning_pipelines(default_planning_pipeline='ompl', pipelines=['ompl', 'chomp', 'pilz_industrial_motion_planner'])
-        .pilz_cartesian_limits(file_path=pilz_limits_path)
-        .joint_limits(file_path=joint_limits_path)
-        .trajectory_execution(file_path=moveit_controllers_path)
-        .robot_description_kinematics()
-        .moveit_cpp(
-            file_path=os.path.join(
-                get_package_share_directory("drims2_description"),
-                "config/yumi/moveit_config.yaml"
-            ))
-        .to_moveit_configs()
-    )
-
-    return moveit_config.to_dict()
-
-
-def launch_setup(context, *args, **kwargs):
-    use_fake_hardware_str = LaunchConfiguration('use_fake_hardware').perform(context)
-    motion_server_config_path = LaunchConfiguration('motion_server_config_path').perform(context)
-
-    motion_server_node = Node(
-        package='drims2_motion_server',
-        executable='motion_server',
-        name='motion_server_node',
-        output='screen',
-        parameters=[
-            motion_server_config_path,
-            get_moveit_configs(use_fake_hardware_str)
-        ]
-    )
-
-    return [motion_server_node]
-
-
 def generate_launch_description():
     drims2_description_pkg_dir = get_package_share_directory('drims2_description')
 
@@ -85,14 +30,17 @@ def generate_launch_description():
         description='Full path to the config file'
     )
 
-    use_fake_hardware_arg = DeclareLaunchArgument(
-        'use_fake_hardware',
-        default_value='True',
-        description='Whether to use fake hardware or not'
+    motion_server_node = Node(
+        package='drims2_motion_server',
+        executable='motion_server',
+        name='motion_server_node',
+        output='screen',
+        parameters=[
+            LaunchConfiguration('motion_server_config_path'),
+        ]
     )
 
     return LaunchDescription([
         motion_server_config_arg,
-        use_fake_hardware_arg,
-        OpaqueFunction(function=launch_setup)
+        motion_server_node
     ])

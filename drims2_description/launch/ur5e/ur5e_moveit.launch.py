@@ -13,12 +13,6 @@ def generate_launch_description():
     ])
 
 def launch_setup(context):
-    robot_description_path = PathJoinSubstitution([FindPackageShare("drims2_description"),"urdf","ur5e","ur5e_cell.urdf.xacro"]).perform(context)
-
-    robot_description = ParameterValue(
-      Command(["xacro", " ", robot_description_path, " ", "use_fake_hardware:=", LaunchConfiguration("fake")]),value_type=str
-    )
-
     srdf_path = PathJoinSubstitution([FindPackageShare("drims2_ur5e_moveit_config"),"config","platform.srdf"]).perform(context)
     joint_limits_path = PathJoinSubstitution([FindPackageShare("drims2_ur5e_moveit_config"),"config","joint_limits.yaml"]).perform(context)
     moveit_controllers_path = PathJoinSubstitution([FindPackageShare("drims2_ur5e_moveit_config"),"config","moveit_controllers.yaml"]).perform(context)

@@ -37,10 +37,7 @@ def launch_setup(context):
   )
 
   return [
-      # motion_server_launch,
     launch_moveit_and_robot_description_launch,
     launch_controllers_launch,
     delayed_control_server
-    # launch_controllers_launch,
-    # delayed_motion_server
   ]

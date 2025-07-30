@@ -12,23 +12,18 @@ def generate_launch_description():
   return LaunchDescription(launch_args + [OpaqueFunction(function=launch_setup)])
 
 def launch_setup(context):
-
-  robot_description_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "urdf", "yumi", "yumi_cell.urdf.xacro"]).perform(context)
-  robot_description_args = {
-    "use_fake_hardware" : LaunchConfiguration("fake")
-  }
-
   srdf_path = PathJoinSubstitution([FindPackageShare("drims2_yumi_moveit_config"), "config", "platform.srdf"]).perform(context)
   joint_limits_path = PathJoinSubstitution([FindPackageShare("drims2_yumi_moveit_config"), "config", "joint_limits.yaml"]).perform(context)
   moveit_controllers_path = PathJoinSubstitution([FindPackageShare("drims2_yumi_moveit_config"), "config", "moveit_controllers.yaml"]).perform(context)
 
   moveit_config = (
     MoveItConfigsBuilder("manipulator", package_name="drims2_yumi_moveit_config")
-    .robot_description(file_path=robot_description_path, mappings=robot_description_args)
     .robot_description_semantic(file_path=srdf_path)
-    .planning_scene_monitor(publish_robot_description=True,
-                            publish_robot_description_semantic=True,
-                            publish_planning_scene=True)
+    .planning_scene_monitor(
+      publish_robot_description=True,
+      publish_robot_description_semantic=True,
+      publish_planning_scene=True
+    )
     .planning_pipelines(default_planning_pipeline="ompl", pipelines=["ompl"])
     .joint_limits(file_path=joint_limits_path)
     .trajectory_execution(file_path=moveit_controllers_path)

@@ -209,8 +209,6 @@
    </xacro:ur_robot>
 
     <!-- Robotiq Hand-e gripper -->
-   <xacro:arg name="com_port" default="/tmp/ttyUR" />
-   
    <xacro:include filename="$(find robotiq_hande_description)/urdf/robotiq_hande_gripper.xacro" />
 
    <xacro:robotiq_hande_gripper
@@ -219,35 +217,14 @@
      parent="tool0"
      grip_pos_min="0.0"
      grip_pos_max="0.025"
-     tty="$(arg com_port)"
+     tty="/tmp/ttyUR"
      baudrate="115200"
      parity="N"
      data_bits="8"
      stop_bit="1"
      slave_id="9"
-     use_fake_hardware="true"
+     use_fake_hardware="$(arg use_fake_hardware)"
    />
-   
-   <!-- <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hand_e_macro.urdf.xacro"/>
-   <xacro:include filename="$(find robotiq_description)/urdf/hand_e.ros2_control.xacro"/>
-   <xacro:robotiq_hande prefix="" parent="tool0" >
-      <origin xyz="0 0 0" rpy="0 0 0" />
-   </xacro:robotiq_hande>
-   
-   <xacro:robotiq_hande_ros2_control
-      name="robotiq_hande"
-      prefix=""
-      use_mock_hardware="$(arg use_fake_hardware)" 
-      com_port="$(arg com_port)"
-      /> -->
-
-
-   <!-- Robotiq 2f-140 gripper -->
-    <!-- <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hande_gripper.urdf.xacro" />
-
-    <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="tool0" use_fake_hardware="$(arg use_fake_hardware)" com_port="$(arg com_port)">
-        <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:robotiq_gripper> -->
 
    <link name="tip"/>
 

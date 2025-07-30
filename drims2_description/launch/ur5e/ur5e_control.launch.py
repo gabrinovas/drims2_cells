@@ -1,9 +1,13 @@
-from launch.launch_description import LaunchDescription
-from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, OpaqueFunction, IncludeLaunchDescription
 from launch.substitutions import PathJoinSubstitution, Command, FindExecutable, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.actions import Node
+from launch.conditions import IfCondition, UnlessCondition
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def launch_setup(context, *args, **kwargs):
   robot_description_content = Command([
@@ -55,20 +59,28 @@ def launch_setup(context, *args, **kwargs):
     parameters=[robot_description]
   )
 
-  robotiq_controller_spawner = Node(
+  robotiq_fake_controller_spawner = Node(
     package="controller_manager",
     executable="spawner",
     arguments=["robotiq_action_controller", 
                "--controller-manager", "/controller_manager"],
     output='screen',
+    condition=IfCondition(LaunchConfiguration("fake"))
+  )
+
+  robotiq_hande_urcap_launch_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "ur5e", "robotiq_hande_urcap_adapter.launch.py"])
+  robotiq_hande_urcap_launch = IncludeLaunchDescription(
+      launch_description_source = PythonLaunchDescriptionSource(robotiq_hande_urcap_launch_path),
+      condition=UnlessCondition(LaunchConfiguration('fake')),
   )
 
   what_to_launch = [
     controller_manager_node,
     joint_state_broadcaster_spawner,
     joint_trajectory_controller,
-    # robotiq_controller_spawner,
+    robotiq_fake_controller_spawner,
     robot_state_publisher_node,
+    robotiq_hande_urcap_launch
     ]
 
   return what_to_launch

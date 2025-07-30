@@ -33,8 +33,8 @@ repositories:
     version: humble-devel
   robotiq_hande_description:
     type: git
-    url: https://github.com/AGH-CEAI/robotiq_hande_description
-    version: 2190af7c85569fc9a85f4b78096edd433c0dbad1
+    url: https://github.com/CNR-STIIMA-IRAS/robotiq_hande_description.git
+    version: humble-devel
   robotiq_2f_urcap_adapter:
     type: git
     url: https://github.com/CNR-STIIMA-IRAS/robotiq_2f_urcap_adapter.git

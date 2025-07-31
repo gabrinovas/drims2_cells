@@ -62,7 +62,7 @@ def launch_setup(context, *args, **kwargs):
   robotiq_fake_controller_spawner = Node(
     package="controller_manager",
     executable="spawner",
-    arguments=["robotiq_action_controller", 
+    arguments=["gripper_action_controller", 
                "--controller-manager", "/controller_manager"],
     output='screen',
     condition=IfCondition(LaunchConfiguration("fake"))

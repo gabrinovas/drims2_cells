@@ -1,11 +1,20 @@
 motion_server_node:
   ros__parameters:
     move_group_name: "manipulator"
-    target_frame: "tool0"
-    
-    cartesian_planner_config:
-      planning_pipeline: "pilz_industrial_motion_planner"
-      planner_id: "LIN"
-      planning_time: 50.0
-      max_velocity_scaling_factor: 0.05
-      max_acceleration_scaling_factor: 0.05
+    end_effector_name: "tip"
+    base_link_name: "base_link"
+    joint_names:
+      - 'joint_1'
+      - 'joint_2'
+      - 'joint_3'
+      - 'joint_4'
+      - 'joint_5'
+      - 'joint_6'
+      - 'joint_7'
+
+    cartesian_max_step: 0.0025
+    cartesian_fraction_threshold: 0.0
+    cartesian_jump_threshold: 0.0
+    cartesian_avoid_collisions: True
+    max_velocity: 0.5
+    max_acceleration: 0.5

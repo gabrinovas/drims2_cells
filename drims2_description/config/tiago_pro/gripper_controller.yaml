@@ -1,0 +1,16 @@
+gripper_command_right_controller:
+  ros__parameters:
+    type: position_controllers/GripperActionController
+    joint: gripper_right_finger_joint
+    
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+
+    max_effort: 10.0 # N
+    goal_tolerance: 0.01 # m
+    allow_stalling: false
+    stall_velocity_threshold: 0.001 #m/s
+    stall_timeout: 1.0 # s
+    action_monitor_rate: 20.0

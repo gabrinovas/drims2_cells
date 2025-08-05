@@ -91,3 +91,7 @@ repositories:
     type: git
     url: https://github.com/Wonikrobotics-git/allegro_hand_ros2_v5.git
     version: master-4finger
+  tiago_pro/warehouse_ros_mongo:
+    type: git
+    url: https://github.com/ros-planning/warehouse_ros_mongo.git
+    version: ros2

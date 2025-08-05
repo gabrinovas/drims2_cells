@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="platform">
 
-   <!-- UR5e parameters -->
+   <!-- ur10e parameters -->
    <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
-   <xacro:arg name="ur_type" default="ur5e"/>
-   <xacro:arg name="name" default="ur5e"/>
+   <xacro:arg name="ur_type" default="ur10e"/>
+   <xacro:arg name="name" default="ur10e"/>
    <xacro:arg name="robot_ip" default="0.0.0.0" />
 
    <!-- parameters -->
@@ -167,7 +167,7 @@
    xyz="0 0 1.2"
    size="${table_length} ${table_width} 0.01"/>
 
-   <!-- UR5e arm -->
+   <!-- ur10e arm -->
    <xacro:ur_robot
       name="$(arg name)"
       tf_prefix="$(arg tf_prefix)"

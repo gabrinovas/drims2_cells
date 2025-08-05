@@ -1,0 +1,20 @@
+motion_server_node:
+  ros__parameters:
+    move_group_name: "arm_right"
+    end_effector_name: "tip"
+    base_link_name: "base_link"
+    joint_names:
+      - 'arm_right_1_joint'
+      - 'arm_right_2_joint'
+      - 'arm_right_3_joint'
+      - 'arm_right_4_joint'
+      - 'arm_right_5_joint'
+      - 'arm_right_6_joint'
+      - 'arm_right_7_joint'
+
+    cartesian_max_step: 0.0025
+    cartesian_fraction_threshold: 0.0
+    cartesian_jump_threshold: 0.0
+    cartesian_avoid_collisions: True
+    max_velocity: 0.5
+    max_acceleration: 0.5

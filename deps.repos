@@ -39,3 +39,47 @@ repositories:
     type: git
     url: https://github.com/CNR-STIIMA-IRAS/robotiq_2f_urcap_adapter.git
     version: main
+  tiago_pro/tiago_pro_moveit_config:
+    type: git
+    url: https://github.com/pal-robotics/tiago_pro_moveit_config.git
+    version: humble-devel
+  tiago_pro/tiago_pro_robot:
+    type: git
+    url: https://github.com/pal-robotics/tiago_pro_robot.git
+    version: humble-devel
+  tiago_pro/tiago_pro_simulation:
+    type: git
+    url: https://github.com/pal-robotics/tiago_pro_simulation.git
+    version: humble-devel
+  tiago_pro/launch_pal:
+    type: git
+    url: https://github.com/pal-robotics/launch_pal.git
+    version: master
+  tiago_pro/pal_pro_gripper:
+    type: git
+    url: https://github.com/pal-robotics/pal_pro_gripper.git
+    version: humble-devel
+  tiago_pro/pal_sea_arm:
+    type: git
+    url: https://github.com/pal-robotics/pal_sea_arm.git
+    version: humble-devel
+  tiago_pro/pal_sea_arm_moveit_config:
+    type: git
+    url: https://github.com/pal-robotics/pal_sea_arm_moveit_config.git
+    version: humble-devel
+  tiago_pro/realsense:
+    type: git
+    url: https://github.com/pal-robotics-forks/realsense.git
+    version: alum-devel
+  tiago_pro/realsense_simulation:
+    type: git
+    url: https://github.com/pal-robotics/realsense_simulation.git
+    version: alum-devel
+  tiago_pro/tiago_pro_head_robot:
+    type: git
+    url: https://github.com/pal-robotics/tiago_pro_head_robot.git
+    version: humble-devel
+  tiago_pro/pal_gazebo_worlds:
+    type: git
+    url: https://github.com/pal-robotics/pal_gazebo_worlds.git
+    version: humble-devel

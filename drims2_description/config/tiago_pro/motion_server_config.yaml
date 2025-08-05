@@ -2,6 +2,7 @@ motion_server_node:
   ros__parameters:
     move_group_name: "arm_right"
     end_effector_name: "tip"
+    # end_effector_name: "arm_right_tool_link"
     base_link_name: "base_link"
     joint_names:
       - 'arm_right_1_joint'

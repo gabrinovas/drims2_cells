@@ -8,7 +8,7 @@ from ament_index_python.packages import get_package_share_directory
 import os
 from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
-from launch.actions import OpaqueFunction, IncludeLaunchDescription, DeclareLaunchArgument, TimerAction
+from launch.actions import OpaqueFunction, IncludeLaunchDescription, DeclareLaunchArgument, TimerAction, ExecuteProcess
 
 def generate_launch_description():
     # Declare the 'fake' launch argument (default is false)
@@ -29,7 +29,8 @@ def generate_launch_description():
                 'tiago_pro_gazebo.launch.py'
             )
         ),
-        launch_arguments={'is_public_sim': 'True'}.items(),
+        launch_arguments={'is_public_sim': 'True',
+                          'world_name': 'empty'}.items(),
         condition=IfCondition(fake)
     )
 
@@ -68,13 +69,13 @@ def generate_launch_description():
     )
 
     # Define the RViz2 node
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='screen',
-        arguments=['-d', rviz_config_file]
-    )
+    # rviz_node = Node(
+    #     package='rviz2',
+    #     executable='rviz2',
+    #     name='rviz2',
+    #     output='screen',
+    #     arguments=['-d', rviz_config_file]
+    # )
 
     motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_motion_server.launch.py"])
     motion_server_launch = IncludeLaunchDescription(
@@ -86,9 +87,26 @@ def generate_launch_description():
         launch_description_source = PythonLaunchDescriptionSource(tiago_pro_gripper_controller_path),
     )
 
+    tiago_pro_rviz_path = PathJoinSubstitution([FindPackageShare("tiago_pro_moveit_config"), "launch", "moveit_rviz.launch.py"])
+    tiago_pro_rviz_launch = IncludeLaunchDescription(
+        launch_description_source = PythonLaunchDescriptionSource(tiago_pro_rviz_path),
+    )
+
     delayed_control_server = TimerAction(
         period=2.0,
         actions=[motion_server_launch]
+    )
+
+    kill_gzclient = ExecuteProcess(
+        cmd=[
+            'pkill gzclient',
+        ],
+        output='screen'
+    )
+
+    kill_gzclient_action = TimerAction(
+        period=8.0,  # 5s to spawn + 5s wait before switching
+        actions=[kill_gzclient]
     )
 
     # Launch description including conditional Tiago launch and the table scene node
@@ -96,8 +114,9 @@ def generate_launch_description():
         fake_arg,
         tiago_launch,
         table_scene_node,
-        static_tip_frame_publisher_node,
-        rviz_node,
+        # static_tip_frame_publisher_node,
+        tiago_pro_rviz_launch,
         delayed_control_server,
-        tiago_pro_gripper_controller_launch  
+        tiago_pro_gripper_controller_launch,
+        # kill_gzclient_action
     ])

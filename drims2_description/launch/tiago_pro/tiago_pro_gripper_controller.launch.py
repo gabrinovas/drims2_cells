@@ -47,7 +47,7 @@ def generate_launch_description():
     )
 
     delayed_switch = TimerAction(
-        period=10.0,  # 5s to spawn + 5s wait before switching
+        period=12.0,  # 5s to spawn + 5s wait before switching
         actions=[switch_controllers]
     )
     return LaunchDescription([

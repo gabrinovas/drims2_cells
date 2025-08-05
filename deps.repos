@@ -83,3 +83,11 @@ repositories:
     type: git
     url: https://github.com/pal-robotics/pal_gazebo_worlds.git
     version: humble-devel
+  tiago_pro/allegro_hand_ros:
+    type: git
+    url: https://gitioc.upc.edu/hands/allegro_hand_ros.git
+    version: ros2
+  tiago_pro/allegro_hand_ros2_v5:
+    type: git
+    url: https://github.com/Wonikrobotics-git/allegro_hand_ros2_v5.git
+    version: master-4finger

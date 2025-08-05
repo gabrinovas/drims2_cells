@@ -30,7 +30,8 @@ def generate_launch_description():
             )
         ),
         launch_arguments={'is_public_sim': 'True',
-                          'world_name': 'empty'}.items(),
+                          'world_name': 'empty',
+                          'tuck_arm': 'False'}.items(),
         condition=IfCondition(fake)
     )
 

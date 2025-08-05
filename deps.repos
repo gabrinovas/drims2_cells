@@ -45,7 +45,7 @@ repositories:
     version: humble-devel
   tiago_pro/tiago_pro_robot:
     type: git
-    url: https://github.com/pal-robotics/tiago_pro_robot.git
+    url: https://github.com/CNR-STIIMA-IRAS/tiago_pro_robot.git
     version: humble-devel
   tiago_pro/tiago_pro_simulation:
     type: git

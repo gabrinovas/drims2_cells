@@ -103,42 +103,42 @@ class AddTableNode(Node):
 
         # -------------------------------
         # Safety barriers (yellow, semi-transparent)
-        barrier_thickness = 0.02  # 2 cm
-        barrier_height = 1.0      # 1 m
+        # barrier_thickness = 0.02  # 2 cm
+        # barrier_height = 1.0      # 1 m
 
-        barrier_offsets = [
-            +W/2 + barrier_thickness/2,  # positive Y side
-            -W/2 - barrier_thickness/2   # negative Y side
-        ]
+        # barrier_offsets = [
+        #     +W/2 + barrier_thickness/2,  # positive Y side
+        #     -W/2 - barrier_thickness/2   # negative Y side
+        # ]
 
-        for i, y_offset in enumerate(barrier_offsets):
-            barrier = CollisionObject()
-            barrier.id = f"safety_barrier_{i+1}"
-            barrier.header.frame_id = "base_footprint"
+        # for i, y_offset in enumerate(barrier_offsets):
+        #     barrier = CollisionObject()
+        #     barrier.id = f"safety_barrier_{i+1}"
+        #     barrier.header.frame_id = "base_footprint"
 
-            barrier_primitive = SolidPrimitive()
-            barrier_primitive.type = SolidPrimitive.BOX
-            barrier_primitive.dimensions = [L, barrier_thickness, barrier_height]
+        #     barrier_primitive = SolidPrimitive()
+        #     barrier_primitive.type = SolidPrimitive.BOX
+        #     barrier_primitive.dimensions = [L, barrier_thickness, barrier_height]
 
-            barrier_pose = PoseStamped()
-            barrier_pose.header.frame_id = "base_footprint"
-            barrier_pose.pose.position.x = pos_x
-            barrier_pose.pose.position.y = pos_y + y_offset
-            barrier_pose.pose.position.z = pos_z + leg_H + T + barrier_height / 2.0
-            barrier_pose.pose.orientation.w = 1.0
+        #     barrier_pose = PoseStamped()
+        #     barrier_pose.header.frame_id = "base_footprint"
+        #     barrier_pose.pose.position.x = pos_x
+        #     barrier_pose.pose.position.y = pos_y + y_offset
+        #     barrier_pose.pose.position.z = pos_z + leg_H + T + barrier_height / 2.0
+        #     barrier_pose.pose.orientation.w = 1.0
 
-            barrier.primitives.append(barrier_primitive)
-            barrier.primitive_poses.append(barrier_pose.pose)
-            barrier.operation = CollisionObject.ADD
-            scene.world.collision_objects.append(barrier)
+        #     barrier.primitives.append(barrier_primitive)
+        #     barrier.primitive_poses.append(barrier_pose.pose)
+        #     barrier.operation = CollisionObject.ADD
+        #     scene.world.collision_objects.append(barrier)
 
-            barrier_color = ObjectColor()
-            barrier_color.id = barrier.id
-            barrier_color.color.r = 1.0  # yellow
-            barrier_color.color.g = 1.0
-            barrier_color.color.b = 0.0
-            barrier_color.color.a = 0.0  # semi-transparent
-            scene.object_colors.append(barrier_color)
+        #     barrier_color = ObjectColor()
+        #     barrier_color.id = barrier.id
+        #     barrier_color.color.r = 1.0  # yellow
+        #     barrier_color.color.g = 1.0
+        #     barrier_color.color.b = 0.0
+        #     barrier_color.color.a = 0.0  # semi-transparent
+        #     scene.object_colors.append(barrier_color)
 
         # -------------------------------
         # Apply scene via service

@@ -14,7 +14,7 @@ def generate_launch_description():
     # Declare the 'fake' launch argument (default is false)
     fake_arg = DeclareLaunchArgument(
         'fake',
-        default_value='false',
+        default_value='true',
         description='If true, launches the Tiago Gazebo simulation'
     )
 
@@ -31,7 +31,7 @@ def generate_launch_description():
         ),
         launch_arguments={'is_public_sim': 'True',
                           'world_name': 'empty',
-                          'tuck_arm': 'False'}.items(),
+                          'tuck_arm': 'True'}.items(),
         condition=IfCondition(fake)
     )
 
@@ -52,32 +52,6 @@ def generate_launch_description():
         parameters=[param_file]
     )
 
-    # Tf tip frame publisher node
-    static_tip_frame_publisher_node = Node(
-        package='tiago_pro_setup_utils',
-        executable='static_tip_frame_publisher_node',
-        name='static_tip_frame_publisher_node',
-        output='screen',
-        parameters=[param_file]
-    )
-
-        # Path to the RViz config file
-    rviz_config_file = os.path.join(
-        get_package_share_directory('tiago_pro_moveit_config'),
-        'config',
-        'rviz',
-        'moveit.rviz'
-    )
-
-    # Define the RViz2 node
-    # rviz_node = Node(
-    #     package='rviz2',
-    #     executable='rviz2',
-    #     name='rviz2',
-    #     output='screen',
-    #     arguments=['-d', rviz_config_file]
-    # )
-
     motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_motion_server.launch.py"])
     motion_server_launch = IncludeLaunchDescription(
         launch_description_source = PythonLaunchDescriptionSource(motion_server_path),
@@ -91,6 +65,7 @@ def generate_launch_description():
     tiago_pro_rviz_path = PathJoinSubstitution([FindPackageShare("tiago_pro_moveit_config"), "launch", "moveit_rviz.launch.py"])
     tiago_pro_rviz_launch = IncludeLaunchDescription(
         launch_description_source = PythonLaunchDescriptionSource(tiago_pro_rviz_path),
+            launch_arguments={'use_sim_time': 'True'}.items()
     )
 
     delayed_control_server = TimerAction(
@@ -115,9 +90,7 @@ def generate_launch_description():
         fake_arg,
         tiago_launch,
         table_scene_node,
-        # static_tip_frame_publisher_node,
         tiago_pro_rviz_launch,
         delayed_control_server,
         tiago_pro_gripper_controller_launch,
-        # kill_gzclient_action
     ])

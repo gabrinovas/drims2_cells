@@ -36,6 +36,9 @@ def generate_launch_description():
         output='screen',
         parameters=[
             LaunchConfiguration('motion_server_config_path'),
+            {
+                'use_sim_time': True,  # Assuming simulation time is used
+            }
         ]
     )
 

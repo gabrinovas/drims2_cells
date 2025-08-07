@@ -20,3 +20,5 @@ motion_server_node:
     cartesian_avoid_collisions: True
     max_velocity: 0.5
     max_acceleration: 0.5
+    planner_id: RRTConnectkConfigDefault
+    allowed_planning_time: 8.0

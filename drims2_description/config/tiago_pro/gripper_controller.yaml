@@ -1,4 +1,4 @@
-gripper_command_right_controller:
+gripper_action_controller: # gripper_right_action_controller
   ros__parameters:
     type: position_controllers/GripperActionController
     joint: gripper_right_finger_joint

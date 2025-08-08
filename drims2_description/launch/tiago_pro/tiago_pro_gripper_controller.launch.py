@@ -22,7 +22,7 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner",
         arguments=[
-            "gripper_command_right_controller",
+            "gripper_action_controller",
             "--param-file", config,
             "--inactive"
         ],
@@ -40,7 +40,7 @@ def generate_launch_description():
         cmd=[
             'ros2', 'control', 'switch_controllers',
             '--deactivate', 'gripper_right_controller',
-            '--activate', 'gripper_command_right_controller',
+            '--activate', 'gripper_action_controller',
             '--strict'
         ],
         output='screen'

@@ -11,11 +11,11 @@ motion_server_node:
       - 'wrist_2_joint'
       - 'wrist_3_joint'
 
-    cartesian_max_step: 0.0025
+    cartesian_max_step: 0.001 #25
     cartesian_fraction_threshold: 0.0
     cartesian_jump_threshold: 0.0
     cartesian_avoid_collisions: True
     max_velocity: 0.5
     max_acceleration: 0.5
-    planner_id: BiTRRT
-    allowed_planning_time: 8.0
+    planner_id: RRTConnect
+    allowed_planning_time: 5.0

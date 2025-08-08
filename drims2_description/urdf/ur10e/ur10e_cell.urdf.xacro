@@ -164,7 +164,7 @@
 
    <!-- Barrier above -->
    <xacro:safety_barrier name="barrier_top"
-   xyz="0 0 1.2"
+   xyz="0 0 2.0"
    size="${table_length} ${table_width} 0.01"/>
 
    <!-- ur10e arm -->

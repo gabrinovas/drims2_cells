@@ -29,6 +29,12 @@ def generate_launch_description():
         description='Full path to the config file'
     )
 
+    use_sim_time_arg = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='true',
+        description='Use simulation time if true'
+    )
+
     motion_server_node = Node(
         package='drims2_motion_server',
         executable='motion_server',
@@ -37,12 +43,13 @@ def generate_launch_description():
         parameters=[
             LaunchConfiguration('motion_server_config_path'),
             {
-                'use_sim_time': True,  # Assuming simulation time is used
+                'use_sim_time': LaunchConfiguration('use_sim_time'),  # Assuming simulation time is used
             }
         ]
     )
 
     return LaunchDescription([
         motion_server_config_arg,
+        use_sim_time_arg,
         motion_server_node
     ])

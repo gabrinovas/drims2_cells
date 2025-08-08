@@ -60,6 +60,7 @@ def generate_launch_description():
     tiago_pro_gripper_controller_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_gripper_controller.launch.py"])
     tiago_pro_gripper_controller_launch = IncludeLaunchDescription(
         launch_description_source = PythonLaunchDescriptionSource(tiago_pro_gripper_controller_path),
+        launch_arguments={'use_sim_time': fake}.items()
     )
 
     tiago_pro_rviz_path = PathJoinSubstitution([FindPackageShare("tiago_pro_moveit_config"), "launch", "moveit_rviz.launch.py"])

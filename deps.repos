@@ -41,7 +41,7 @@ repositories:
     version: main
   tiago_pro/tiago_pro_moveit_config:
     type: git
-    url: https://github.com/pal-robotics/tiago_pro_moveit_config.git
+    url: https://github.com/CNR-STIIMA-IRAS/tiago_pro_moveit_config.git
     version: humble-devel
   tiago_pro/tiago_pro_robot:
     type: git

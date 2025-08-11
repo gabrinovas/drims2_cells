@@ -15,7 +15,7 @@ repositories:
     type: git
     url: https://github.com/gbartyzel/abb_ros2_msgs.git
     version: rolling
-  abb_omnicore_ros2:
+  abb_libs/abb_omnicore_ros2:
     type: git
     url: https://github.com/MerlinLaboratory/abb_omnicore_ros2.git
     version: marco

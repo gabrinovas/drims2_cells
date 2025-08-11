@@ -18,7 +18,7 @@ repositories:
   abb_libs/abb_omnicore_ros2:
     type: git
     url: https://github.com/MerlinLaboratory/abb_omnicore_ros2.git
-    version: marco
+    version: cari
   ros2_robotiq_gripper:
     type: git
     url: https://github.com/PickNikRobotics/ros2_robotiq_gripper.git

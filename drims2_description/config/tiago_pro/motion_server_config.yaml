@@ -1,8 +1,7 @@
 motion_server_node:
   ros__parameters:
     move_group_name: "arm_right_torso"
-    end_effector_name: "tip"
-    # end_effector_name: "arm_right_tool_link"
+    end_effector_name: "gripper_right_base_link"
     base_link_name: "base_footprint"
     joint_names:
       - 'torso_lift_joint'
@@ -22,3 +21,4 @@ motion_server_node:
     max_acceleration: 0.5
     planner_id: RRTConnectkConfigDefault
     allowed_planning_time: 8.0
+    virtual_end_effector: "tip"

@@ -40,7 +40,7 @@ def generate_launch_description():
         get_package_share_directory('drims2_description'),
         'config',
         'tiago_pro',
-        'table_scene_params.yaml'
+        'tiago_utils_config.yaml'
     )
 
     # Define the table_scene_publisher_node with parameters
@@ -52,9 +52,19 @@ def generate_launch_description():
         parameters=[param_file]
     )
 
+    # Tf tip frame publisher node
+    static_tip_frame_publisher_node = Node(
+        package='tiago_pro_setup_utils',
+        executable='static_tip_frame_publisher_node',
+        name='static_tip_frame_publisher_node',
+        output='screen',
+        parameters=[param_file]
+    )
+
     motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_motion_server.launch.py"])
     motion_server_launch = IncludeLaunchDescription(
         launch_description_source = PythonLaunchDescriptionSource(motion_server_path),
+        launch_arguments={'use_sim_time': fake}.items()
     )
 
     tiago_pro_gripper_controller_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_gripper_controller.launch.py"])
@@ -91,6 +101,7 @@ def generate_launch_description():
         fake_arg,
         tiago_launch,
         table_scene_node,
+        static_tip_frame_publisher_node,
         tiago_pro_rviz_launch,
         delayed_control_server,
         tiago_pro_gripper_controller_launch,

@@ -8,3 +8,7 @@ table_scene_publisher_node:
     table_pos_x: 1.3
     table_pos_y: 0.0
     table_pos_z: 0.0
+
+static_tip_frame_publisher_node:
+  ros__parameters:
+    tip_z: 0.15

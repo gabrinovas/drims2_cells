@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
           'table_scene_publisher_node = tiago_pro_setup_utils.table_scene_publisher_node:main',
           'static_tip_frame_publisher_node = tiago_pro_setup_utils.static_tip_frame_publisher_node:main',
+          'set_param_once_node = tiago_pro_setup_utils.set_param_once_node:main',
         ],
     },
 )

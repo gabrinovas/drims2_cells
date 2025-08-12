@@ -61,6 +61,15 @@ def generate_launch_description():
         parameters=[param_file]
     )
 
+    # Set param to move_group ompl longest_valid_segment_fraction node
+    set_param_once_node = Node(
+        package='tiago_pro_setup_utils',
+        executable='set_param_once_node',
+        name='set_param_once_node',
+        output='screen',
+        parameters=[]
+    )
+
     motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_motion_server.launch.py"])
     motion_server_launch = IncludeLaunchDescription(
         launch_description_source = PythonLaunchDescriptionSource(motion_server_path),
@@ -102,6 +111,7 @@ def generate_launch_description():
         tiago_launch,
         table_scene_node,
         static_tip_frame_publisher_node,
+        set_param_once_node,
         tiago_pro_rviz_launch,
         delayed_control_server,
         tiago_pro_gripper_controller_launch,

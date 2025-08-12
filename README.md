@@ -4,6 +4,12 @@ This repository contains the robot descriptions, MoveIt configurations, and cont
 
 To launch the robotic cells, use the following commands.
 
+For the UR10e robot:
+
+```bash
+ros2 launch drims2_description ur10e_start.launch.py fake:=true
+```
+
 For the UR5e robot:
 
 ```bash

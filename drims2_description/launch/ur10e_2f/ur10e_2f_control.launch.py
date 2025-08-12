@@ -1,0 +1,114 @@
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, OpaqueFunction, IncludeLaunchDescription
+from launch.substitutions import PathJoinSubstitution, Command, FindExecutable, LaunchConfiguration
+from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
+from launch_ros.actions import Node
+from launch.conditions import IfCondition, UnlessCondition
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+def launch_setup(context, *args, **kwargs):
+  robot_description_content = Command([
+      PathJoinSubstitution([FindExecutable(name='xacro')]),
+      " ", 
+      PathJoinSubstitution([
+          FindPackageShare("drims2_description"), 
+          "urdf", "ur10e_2f", "ur10e_2f_cell.urdf.xacro"
+      ]),
+      " ", 
+      "use_fake_hardware:=", LaunchConfiguration("fake"),
+      " ",
+      "robot_ip:=", LaunchConfiguration("robot_ip"),
+  ])
+  robot_description = {
+      'robot_description': ParameterValue(robot_description_content, value_type=str)
+  }
+
+  controllers_config = PathJoinSubstitution([FindPackageShare("drims2_description"),
+   "config","ur10e_2f","controllers.yaml"])
+
+  controller_manager_node = Node(
+    package="controller_manager",
+    executable="ros2_control_node",
+    parameters=[controllers_config,robot_description],
+    output="screen"
+    )
+
+  joint_trajectory_controller = Node(
+    package="controller_manager",
+    executable="spawner",
+    arguments=["joint_trajectory_controller", 
+               "--controller-manager", "/controller_manager"],
+    output='screen',
+  )
+
+  joint_state_broadcaster_spawner = Node(
+    package="controller_manager",
+    executable="spawner",
+    arguments=["joint_state_broadcaster",
+               "--controller-manager","/controller_manager"],
+    output='screen',
+  )
+
+  robot_state_publisher_node = Node(
+    package="robot_state_publisher",
+    executable="robot_state_publisher",
+    output="screen",
+    parameters=[robot_description]
+  )
+
+  # robotiq_fake_controller_spawner = Node(
+  #   package="controller_manager",
+  #   executable="spawner",
+  #   arguments=["gripper_action_controller", 
+  #              "--controller-manager", "/controller_manager"],
+  #   output='screen',
+  #   condition=IfCondition(LaunchConfiguration("fake"))
+  # )
+
+  robotiq_controller_spawner = Node(
+    package="controller_manager",
+    executable="spawner",
+    arguments=["gripper_action_controller", 
+               "--controller-manager", "/controller_manager"],
+    output='screen',
+  )
+
+  robotiq_activation_controller_spawner = Node(
+    package="controller_manager",
+    executable="spawner",
+    arguments=["robotiq_activation_controller", 
+               "--controller-manager", "/controller_manager"],
+    output='screen',
+  )
+  # robotiq_hande_urcap_launch_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "ur10e", "robotiq_hande_urcap_adapter.launch.py"])
+  # robotiq_hande_urcap_launch = IncludeLaunchDescription(
+  #     launch_description_source = PythonLaunchDescriptionSource(robotiq_hande_urcap_launch_path),
+  #     condition=UnlessCondition(LaunchConfiguration('fake')),
+  # )
+
+  what_to_launch = [
+    controller_manager_node,
+    joint_state_broadcaster_spawner,
+    joint_trajectory_controller,
+    robot_state_publisher_node,
+    # robotiq_fake_controller_spawner,
+    robotiq_controller_spawner,
+    robotiq_activation_controller_spawner,
+    # robotiq_hande_urcap_launch
+    ]
+
+  return what_to_launch
+
+def generate_launch_description():
+  launch_args = []
+  launch_args.append(DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"))
+  launch_args.append(DeclareLaunchArgument(name="robot_ip", default_value="0.0.0.0", description="Robot ip"))
+
+  ld = LaunchDescription(launch_args+[OpaqueFunction(function=launch_setup)])
+    
+  return ld
+
+  

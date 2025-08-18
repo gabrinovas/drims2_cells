@@ -83,9 +83,17 @@ def generate_launch_description():
     )
 
     tiago_pro_rviz_path = PathJoinSubstitution([FindPackageShare("tiago_pro_moveit_config"), "launch", "moveit_rviz.launch.py"])
-    tiago_pro_rviz_launch = IncludeLaunchDescription(
-        launch_description_source = PythonLaunchDescriptionSource(tiago_pro_rviz_path),
-            launch_arguments={'use_sim_time': 'True'}.items()
+    # Simulation variant
+    tiago_pro_rviz_sim_launch = IncludeLaunchDescription(
+        launch_description_source=PythonLaunchDescriptionSource(tiago_pro_rviz_path),
+        launch_arguments={'use_sim_time': 'True'}.items(),
+        condition=IfCondition(fake)
+    )
+    # Real robot variant
+    tiago_pro_rviz_real_launch = IncludeLaunchDescription(
+        launch_description_source=PythonLaunchDescriptionSource(tiago_pro_rviz_path),
+        launch_arguments={'use_sim_time': 'False'}.items(),
+        condition=UnlessCondition(fake)
     )
 
     delayed_control_server = TimerAction(
@@ -112,7 +120,8 @@ def generate_launch_description():
         table_scene_node,
         static_tip_frame_publisher_node,
         set_param_once_node,
-        tiago_pro_rviz_launch,
+        tiago_pro_rviz_sim_launch,
+        tiago_pro_rviz_real_launch,
         delayed_control_server,
         tiago_pro_gripper_controller_launch,
     ])

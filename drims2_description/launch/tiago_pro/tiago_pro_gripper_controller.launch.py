@@ -1,57 +1,55 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, TimerAction
-from launch.substitutions import LaunchConfiguration
+from launch.actions import ExecuteProcess, RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 from launch_ros.actions import Node
-import os
-from ament_index_python.packages import get_package_share_directory
-from launch.actions import DeclareLaunchArgument, TimerAction, ExecuteProcess
 
 def generate_launch_description():
-    drims2_description_pkg_dir = get_package_share_directory('drims2_description')
+    ctrl_new = 'gripper_action_controller'
+    ctrl_old = 'gripper_right_controller'   # controller that we want to deactivate
+    cm = '/controller_manager'
 
-    config_arg = DeclareLaunchArgument(
-        name='config',
-        description='Full path to the controller configuration file',
-        default_value=os.path.join(drims2_description_pkg_dir, 'config/tiago_pro/gripper_controller.yaml'),
+    # 1) Load-only of the new controller (specify plugin type)
+    spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        output='screen',
+        arguments=[ctrl_new, '--controller-manager', cm, '--load-only',
+                   '-t', 'position_controllers/GripperActionController'],
     )
 
-    config = LaunchConfiguration('config')
-
-    # Spawner node
-    gripper_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=[
-            "gripper_action_controller",
-            "--param-file", config,
-            "--inactive"
-        ],
-        output="screen"
+    # 2) Run your ROS node that sets ALL parameters atomically for /gripper_action_controller
+    #    (Assumes you installed it as a console_script: drims2_description set_controller_params_once)
+    param_setter = Node(
+        package='tiago_pro_setup_utils',
+        executable='set_controller_params_once_node',
+        output='screen',
+        # If your script accepts CLI args, add them here, e.g.:
+        # arguments=['--controller-name', ctrl_new],
     )
 
-    # Delay by 5 seconds
-    delayed_gripper_spawner = TimerAction(
-        period=5.0,
-        actions=[gripper_spawner]
+    # 3) Set the new controller to "inactive" (configured but not active yet)
+    set_inactive = ExecuteProcess(
+        cmd=['ros2', 'control', 'set_controller_state', ctrl_new, 'inactive',
+             '--controller-manager', cm],
+        output='screen'
     )
 
-    # Switch controllers after another delay (e.g., after 10s total)
-    switch_controllers = ExecuteProcess(
+    # 4) Switch controllers: deactivate the old one and activate the new one
+    do_switch = ExecuteProcess(
         cmd=[
             'ros2', 'control', 'switch_controllers',
-            '--deactivate', 'gripper_right_controller',
-            '--activate', 'gripper_action_controller',
-            '--strict'
+            '--deactivate', ctrl_old,
+            '--activate',   ctrl_new,
+            '--strict',
+            '--controller-manager', cm
         ],
         output='screen'
     )
 
-    delayed_switch = TimerAction(
-        period=12.0,  # 5s to spawn + 5s wait before switching
-        actions=[switch_controllers]
-    )
-    return LaunchDescription([
-        config_arg,
-        delayed_gripper_spawner,
-        delayed_switch
-    ])
+    # Chain the steps: spawner -> param_setter node -> set_inactive -> switch
+    chain = []
+    chain.append(RegisterEventHandler(OnProcessExit(target_action=spawner, on_exit=[param_setter])))
+    chain.append(RegisterEventHandler(OnProcessExit(target_action=param_setter, on_exit=[set_inactive])))
+    chain.append(RegisterEventHandler(OnProcessExit(target_action=set_inactive, on_exit=[do_switch])))
+
+    return LaunchDescription([spawner] + chain)

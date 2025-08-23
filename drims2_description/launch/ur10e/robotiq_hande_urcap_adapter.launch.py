@@ -25,7 +25,7 @@ def generate_launch_description():
                 "min_gripper_width": 0.0,
                 "max_gripper_speed": 0.15,
                 "min_gripper_speed": 0.01,
-                "max_gripper_force": 185.0,
+                "max_gripper_force": 1e10 + 1e-1,
                 "min_gripper_force": 20.0,
             }]
         )

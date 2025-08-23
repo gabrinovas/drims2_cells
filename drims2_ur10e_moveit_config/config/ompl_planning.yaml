@@ -10,7 +10,7 @@ request_adapters: >-
     default_planner_request_adapters/FixStartStatePathConstraints
 
 
-default_planner_config: BiTRRT
+default_planner_config: RRTConnect
 planner_configs:
   AnytimePathShortening:
     type: geometric::AnytimePathShortening
@@ -142,7 +142,7 @@ planner_configs:
     max_failures: 5000  # maximum consecutive failure limit. default: 5000
 
 manipulator:
-  default_planner_config: BiTRRT
+  default_planner_config: RRTConnect
   planner_configs:
     - SBL
     - EST

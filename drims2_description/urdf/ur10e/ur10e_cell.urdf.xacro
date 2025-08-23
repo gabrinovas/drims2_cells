@@ -149,7 +149,7 @@
 
    <!-- Barrier behind the robot -->
    <xacro:safety_barrier name="barrier_back"
-   xyz="${-table_length/2 - 0.3} 0 0.3"
+   xyz="${-table_length/2 - 0.35} 0 0.3"
    size="0.01 ${table_width} 0.8"/>
 
    <!-- Barrier to the left -->
@@ -205,7 +205,7 @@
       script_sender_port="$(arg script_sender_port)"
       trajectory_port="$(arg trajectory_port)"
       >
-      <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 0"/>
+      <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 ${-pi/2}"/>
    </xacro:ur_robot>
 
     <!-- Robotiq Hand-e gripper -->

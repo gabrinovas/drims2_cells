@@ -47,7 +47,7 @@
    <xacro:arg name="simulation_controllers" default="" />
 
    <!-- initial position for simulations (Fake Hardware, Gazebo, Ignition) -->
-   <xacro:arg name="initial_positions_file" default="$(find drims2_description)/urdf/$(arg ur_type)/initial_positions.yaml"/>
+   <xacro:arg name="initial_positions_file" default="$(find drims2_description)/urdf/$(arg ur_type)_2f/initial_positions.yaml"/>
 
    <!-- convert to property to use substitution in function -->
    <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)"/>
@@ -206,7 +206,7 @@
       script_sender_port="$(arg script_sender_port)"
       trajectory_port="$(arg trajectory_port)"
       >
-      <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 0"/>
+      <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 ${pi}"/>
    </xacro:ur_robot>
 
     <!-- Robotiq 2f-140 -->

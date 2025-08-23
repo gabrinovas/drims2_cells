@@ -7,7 +7,7 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
   launch_args = [
     DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"),
-    DeclareLaunchArgument(name="robot_ip", default_value="192.168.125.121", description="Robot ip"),
+    DeclareLaunchArgument(name="robot_ip", default_value="192.168.254.100", description="Robot ip"),
   ]
   return LaunchDescription(launch_args + [OpaqueFunction(function=launch_setup)])
 

@@ -21,6 +21,7 @@ class TiagoRightGripper(Node):
         self.gripper_client = ActionClient(
             self, FollowJointTrajectory,
             "/gripper_right_controller/follow_joint_trajectory"
+            ,
         )
 
     def gripper_action(self, position, duration=2.0):
@@ -43,7 +44,7 @@ class TiagoRightGripper(Node):
 
     def open_gripper(self):
         self.logger.info("Opening gripper")
-        return self.gripper_action(0.044)
+        return self.gripper_action(0.8)
 
 
 def main():
@@ -61,9 +62,9 @@ def main():
         node.logger.info("Still waiting...")
 
     # Test: chiudi e apri gripper
-    future = node.close_gripper()
-    rclpy.spin_until_future_complete(node, future)
-    node.logger.info("Closing completed.")
+    # future = node.close_gripper()
+    # rclpy.spin_until_future_complete(node, future)
+    # node.logger.info("Closing completed.")
 
     future = node.open_gripper()
     rclpy.spin_until_future_complete(node, future)

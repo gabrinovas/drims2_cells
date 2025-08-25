@@ -24,6 +24,7 @@ setup(
           'static_tip_frame_publisher_node = tiago_pro_setup_utils.static_tip_frame_publisher_node:main',
           'set_param_once_node = tiago_pro_setup_utils.set_param_once_node:main',
           'set_controller_params_once_node = tiago_pro_setup_utils.set_controller_params_once_node:main',
+          'gripper_action_bridge_node = tiago_pro_setup_utils.gripper_action_bridge_node:main',
         ],
     },
 )

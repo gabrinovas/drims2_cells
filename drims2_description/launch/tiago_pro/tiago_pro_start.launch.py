@@ -123,5 +123,5 @@ def generate_launch_description():
         tiago_pro_rviz_sim_launch,
         tiago_pro_rviz_real_launch,
         delayed_control_server,
-        tiago_pro_gripper_controller_launch,
+        # tiago_pro_gripper_controller_launch,
     ])

@@ -13,8 +13,7 @@ def generate_launch_description():
         package='controller_manager',
         executable='spawner',
         output='screen',
-        arguments=[ctrl_new, '--controller-manager', cm, '--load-only',
-                   '-t', 'position_controllers/GripperActionController'],
+        arguments=[ctrl_new, '--controller-manager', cm, '--load-only'],
     )
 
     # 2) Run your ROS node that sets ALL parameters atomically for /gripper_action_controller

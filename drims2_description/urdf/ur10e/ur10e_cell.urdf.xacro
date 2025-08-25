@@ -55,11 +55,15 @@
    <link name="world"/>
 
    <!-- Table parameters -->
-   <xacro:property name="table_length" value="1.2"/>
-   <xacro:property name="table_width" value="0.6"/>
+   <xacro:property name="table_length" value="1.3"/>
+   <xacro:property name="table_width" value="0.95"/>
    <xacro:property name="table_height" value="0.75"/>
    <xacro:property name="table_thickness" value="0.05"/>
    <xacro:property name="leg_width" value="0.05"/>
+
+   <xacro:property name="raised_table_length" value="0.8"/>
+   <xacro:property name="raised_table_width" value="0.95"/>
+   <xacro:property name="raised_table_thickness" value="0.07"/>
 
    <link name="table_top">
       <visual>
@@ -86,6 +90,33 @@
       <parent link="world"/>
       <child link="table_top"/>
       <origin xyz="0 0 ${table_height}" rpy="0 0 0"/>
+   </joint>
+
+   <link name="table_top_raised">
+      <visual>
+         <geometry>
+            <box size="${raised_table_length} ${raised_table_width} ${raised_table_thickness}"/>
+         </geometry>
+         <origin xyz="0 0 -${raised_table_thickness/2}" rpy="0 0 0"/>
+         <material name="brown">
+            <color rgba="0.4 0.2 0 1"/>
+         </material>
+      </visual>
+      <collision>
+         <geometry>
+            <box size="${raised_table_length} ${raised_table_width} ${raised_table_thickness}"/>
+         </geometry>
+         <origin xyz="0 0 -${raised_table_thickness/2}" rpy="0 0 0"/>
+         <material name="brown">
+            <color rgba="0.4 0.2 0 1"/>
+         </material>
+      </collision>
+   </link>
+
+   <joint name="table_to_raised_table" type="fixed">
+      <parent link="table_top"/>
+      <child link="table_top_raised"/>
+      <origin xyz="${table_length/2 - raised_table_length/2} 0 ${raised_table_thickness/2}" rpy="0 0 0"/>
    </joint>
 
    <xacro:macro name="table_leg" params="name x y z">
@@ -120,6 +151,92 @@
    <xacro:table_leg name="leg_2" x="${-table_length / 2 + leg_width / 2}" y="${table_width / 2 - leg_width / 2}" z="${table_height - table_thickness}"/>
    <xacro:table_leg name="leg_3" x="${table_length / 2 - leg_width / 2}" y="${-table_width / 2 + leg_width / 2}" z="${table_height - table_thickness}"/>
    <xacro:table_leg name="leg_4" x="${-table_length / 2 + leg_width / 2}" y="${-table_width / 2 + leg_width / 2}" z="${table_height - table_thickness}"/>
+
+   <!-- Camera holder properties -->
+   <xacro:property name="holder_vertical_height" value="0.715"/>
+   <xacro:property name="holder_horizontal_length" value="0.52"/>
+   <xacro:property name="holder_size" value="0.1"/>
+
+   <link name="camera_holder_vertical">
+      <visual>
+         <geometry>
+         <box size="${holder_size} ${holder_size} ${holder_vertical_height}"/>
+         </geometry>
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <material name="red_transparent">
+         <color rgba="1.0 1.0 0.5 0.3"/>
+         </material>
+      </visual>
+      <collision>
+         <geometry>
+         <box size="${holder_size} ${holder_size} ${holder_vertical_height}"/>
+         </geometry>
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <material name="red_transparent">
+         <color rgba="1.0 1.0 0.5 0.3"/>
+         </material>
+      </collision>
+   </link>
+
+   <joint name="table_to_camera_holder_vertical" type="fixed">
+      <parent link="table_top_raised"/>
+      <child link="camera_holder_vertical"/>
+      <origin xyz="0 ${table_width/2 + 0.05} ${holder_vertical_height/2}" rpy="0 0 0"/>
+   </joint>
+
+   <link name="camera_holder_vertical_back">
+      <visual>
+         <geometry>
+         <box size="${holder_size} ${holder_size} ${holder_vertical_height}"/>
+         </geometry>
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <material name="red_transparent">
+         <color rgba="1.0 1.0 0.5 0.3"/>
+         </material>
+      </visual>
+      <collision>
+         <geometry>
+         <box size="${holder_size} ${holder_size} ${holder_vertical_height}"/>
+         </geometry>
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <material name="red_transparent">
+         <color rgba="1.0 1.0 0.5 0.3"/>
+         </material>
+      </collision>
+   </link>
+
+   <joint name="camera_holder_vertical_to_back" type="fixed">
+      <parent link="camera_holder_vertical"/>
+      <child link="camera_holder_vertical_back"/>
+      <origin xyz="0 ${-holder_size} 0" rpy="0 0 0"/>
+   </joint>
+
+   <link name="camera_holder_horizontal">
+      <visual>
+         <geometry>
+         <box size="${holder_size} ${holder_horizontal_length} ${holder_size}"/>
+         </geometry>
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <material name="red_transparent">
+         <color rgba="1.0 1.0 0.5 0.3"/>
+         </material>
+      </visual>
+      <collision>
+         <geometry>
+         <box size="${holder_size} ${holder_horizontal_length} ${holder_size}"/>
+         </geometry>
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+         <material name="red_transparent">
+         <color rgba="1.0 1.0 0.5 0.3"/>
+         </material>
+      </collision>
+   </link>
+
+   <joint name="camera_holder_vertical_to_horizontal" type="fixed">
+      <parent link="camera_holder_vertical"/>
+      <child link="camera_holder_horizontal"/>
+      <origin xyz="0 ${-holder_horizontal_length/2 - holder_size/2} ${holder_vertical_height/2 - holder_size/2}" rpy="0 0 0"/>
+   </joint>
 
    <!-- Virtual safety barriers (collision walls) -->
    <xacro:macro name="safety_barrier" params="name xyz size">

@@ -35,7 +35,7 @@ joint_trajectory_controller:
 
 gripper_action_controller:
   ros__parameters:
-    allow_stalling: false
+    allow_stalling: true
     goal_tolerance: 0.01
     joint: finger_joint
     max_effort: 0.0

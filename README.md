@@ -28,3 +28,29 @@ ros2 launch drims2_description tiago_pro_start.launch.py fake:=true
 
 Use `fake:=true` to run in simulation mode, and `fake:=false` to connect to the real hardware.
 
+## 🦾 Real Robot Setup
+
+
+### Tiago Pro
+
+1. **Network setup**  
+   - Connect your laptop to the robot using a **wired DHCP connection**.  
+
+2. **Start the Docker environment**  
+   - Once inside the container, run:  
+     ```bash
+     source setup_robot_connection.sh
+     ```
+   - Ensure that all messages are displayed without errors.
+
+3. **Verification**  
+   - Check that the topics from Tiago are visible:  
+     ```bash
+     ros2 topic list
+     ```
+   - When opening new terminals, use:  
+     ```bash
+     ./connect.sh
+     ```
+     and verify that the same topics are still visible.
+

@@ -49,3 +49,27 @@ ping 192.164.254.100
 If the network is correctly configured, you should see replies from the robot as shown below:
 
 ![Network Settings](media/ping.png)
+
+### Tiago Pro
+
+1. **Network setup**  
+   - Connect your laptop to the robot using a **wired DHCP connection**.  
+
+2. **Start the Docker environment**  
+   - Once inside the container, run:  
+     ```bash
+     source setup_robot_connection.sh
+     ```
+   - Ensure that all messages are displayed without errors.
+
+3. **Verification**  
+   - Check that the topics from Tiago are visible:  
+     ```bash
+     ros2 topic list
+     ```
+   - When opening new terminals, use:  
+     ```bash
+     ./connect.sh
+     ```
+     and verify that the same topics are still visible.
+

@@ -4,27 +4,48 @@ This repository contains the robot descriptions, MoveIt configurations, and cont
 
 To launch the robotic cells, use the following commands.
 
-For the UR10e robot:
+For the UR10e with hand-e gripper robot:
 
 ```bash
 ros2 launch drims2_description ur10e_start.launch.py fake:=true
 ```
 
-For the UR5e robot:
+For the UR10e with 2f gripper robot:
 
 ```bash
-ros2 launch drims2_description ur5e_start.launch.py fake:=true
+ros2 launch drims2_description ur10e_2f_start.launch.py fake:=true
 ```
 
-For the ABB YuMi robot:
+<!-- For the ABB YuMi robot:
 ```bash
 ros2 launch drims2_description yumi_start.launch.py fake:=true
-```
+``` -->
 
 For the Tiago Pro robot:
 ```bash
 ros2 launch drims2_description tiago_pro_start.launch.py fake:=true
 ```
 
-Use `fake:=true` to run in simulation mode, and `fake:=false` to connect to the real hardware.
+> ⚠️  Use `fake:=true` to run in simulation mode, and `fake:=false` to connect to the real hardware.
 
+## How to connect to robot
+
+### UR robot
+
+To connect to the UR robot, first plug the **Ethernet cable** from the robot to your laptop.  
+
+1. On Ubuntu, go to **Settings → Network → Wired → Add**.  
+2. Create a new wired network with the configuration shown in the image below:  
+
+![Network Settings](media/network_settings.png)
+
+
+To verify that the connection is working, open a terminal and run:
+
+```bash
+ping 192.164.254.100
+```
+
+If the network is correctly configured, you should see replies from the robot as shown below:
+
+![Network Settings](media/ping.png)

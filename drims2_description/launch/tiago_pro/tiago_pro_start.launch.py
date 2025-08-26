@@ -76,11 +76,11 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': fake}.items()
     )
 
-    tiago_pro_gripper_controller_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_gripper_controller.launch.py"])
-    tiago_pro_gripper_controller_launch = IncludeLaunchDescription(
-        launch_description_source = PythonLaunchDescriptionSource(tiago_pro_gripper_controller_path),
-        launch_arguments={'use_sim_time': fake}.items()
-    )
+    # tiago_pro_gripper_controller_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_gripper_controller.launch.py"])
+    # tiago_pro_gripper_controller_launch = IncludeLaunchDescription(
+    #     launch_description_source = PythonLaunchDescriptionSource(tiago_pro_gripper_controller_path),
+    #     launch_arguments={'use_sim_time': fake}.items()
+    # )
 
     tiago_pro_rviz_path = PathJoinSubstitution([FindPackageShare("tiago_pro_moveit_config"), "launch", "moveit_rviz.launch.py"])
     # Simulation variant
@@ -113,6 +113,15 @@ def generate_launch_description():
         actions=[kill_gzclient]
     )
 
+    # Set param to move_group ompl longest_valid_segment_fraction node
+    gripper_node = Node(
+        package='tiago_pro_setup_utils',
+        executable='tiago_gripper_node',
+        name='tiago_gripper_node',
+        output='screen',
+        parameters=[]
+    )
+
     # Launch description including conditional Tiago launch and the table scene node
     return LaunchDescription([
         fake_arg,
@@ -123,5 +132,6 @@ def generate_launch_description():
         tiago_pro_rviz_sim_launch,
         tiago_pro_rviz_real_launch,
         delayed_control_server,
+        gripper_node
         # tiago_pro_gripper_controller_launch,
     ])

@@ -13,8 +13,8 @@ motion_server_node:
       - 'joint_7'
 
     cartesian_max_step: 0.0025
-    cartesian_fraction_threshold: 0.0
+    cartesian_fraction_threshold: 0.9
     cartesian_jump_threshold: 0.0
     cartesian_avoid_collisions: True
-    max_velocity: 0.5
-    max_acceleration: 0.5
+    max_velocity: 0.3
+    max_acceleration: 0.3

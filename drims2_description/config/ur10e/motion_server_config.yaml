@@ -12,7 +12,7 @@ motion_server_node:
       - 'wrist_3_joint'
 
     cartesian_max_step: 0.001 #25
-    cartesian_fraction_threshold: 0.0
+    cartesian_fraction_threshold: 0.9
     cartesian_jump_threshold: 0.0
     cartesian_avoid_collisions: True
     max_velocity: 0.5

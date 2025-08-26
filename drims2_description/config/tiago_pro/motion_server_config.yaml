@@ -14,11 +14,11 @@ motion_server_node:
       - 'arm_right_7_joint'
 
     cartesian_max_step: 0.001
-    cartesian_fraction_threshold: 0.0
+    cartesian_fraction_threshold: 0.9
     cartesian_jump_threshold: 0.0
     cartesian_avoid_collisions: True
-    max_velocity: 0.5
-    max_acceleration: 0.5
+    max_velocity: 0.4
+    max_acceleration: 0.4
     planner_id: RRTConnectkConfigDefault
     allowed_planning_time: 8.0
     virtual_end_effector: "tip"

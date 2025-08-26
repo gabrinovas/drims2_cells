@@ -11,11 +11,11 @@ def generate_launch_description():
     # Checkerboard calibration arguments
     DeclareLaunchArgument(name="frame_id",              default_value="base_link",    description="Base link of the robot respect to the checkerboard is referred"),
     DeclareLaunchArgument(name="checkerboard_frame_id", default_value="checkerboard", description="Checkerboard frame id name"),
-    DeclareLaunchArgument(name="checkerboar_x",         default_value="-0.640",       description="Checkerboar x"),
-    DeclareLaunchArgument(name="checkerboar_y",         default_value="0.321",        description="Checkerboar y"),
-    DeclareLaunchArgument(name="checkerboar_z",         default_value="0.09",        description="Checkerboar z"),
-    DeclareLaunchArgument(name="checkerboard_qx",       default_value="0.0039999",          description="Checkerboar qx"),
-    DeclareLaunchArgument(name="checkerboard_qy",       default_value="0.999992",          description="Checkerboar qy"),
+    DeclareLaunchArgument(name="checkerboar_x",         default_value="-0.815",       description="Checkerboar x"),
+    DeclareLaunchArgument(name="checkerboar_y",         default_value="0.096",        description="Checkerboar y"),
+    DeclareLaunchArgument(name="checkerboar_z",         default_value="0.081",        description="Checkerboar z"),
+    DeclareLaunchArgument(name="checkerboard_qx",       default_value="0.0093374",          description="Checkerboar qx"),
+    DeclareLaunchArgument(name="checkerboard_qy",       default_value="0.9999564",          description="Checkerboar qy"),
     DeclareLaunchArgument(name="checkerboard_qz",       default_value="0.0",          description="Checkerboar qz"),
     DeclareLaunchArgument(name="checkerboard_qw",       default_value="0.0",          description="Checkerboar qw"),
   ]

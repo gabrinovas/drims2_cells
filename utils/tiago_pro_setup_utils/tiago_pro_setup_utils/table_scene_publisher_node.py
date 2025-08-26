@@ -64,6 +64,99 @@ class AddTableNode(Node):
         scene.object_colors.append(top_color)
 
         # -------------------------------
+        # Camera base
+        camera_base = CollisionObject()
+        camera_base.id = "camera_base"
+        camera_base.header.frame_id = "table_top"
+
+        camera_base_primitive = SolidPrimitive()
+        camera_base_primitive.type = SolidPrimitive.BOX
+        camera_base_primitive.dimensions = [L, W/10, T]
+
+        camera_base_pose = PoseStamped()
+        camera_base_pose.header.frame_id = "table_top"
+        camera_base_pose.pose.position.x = 0.0
+        camera_base_pose.pose.position.y = -W/2 + W/20
+        camera_base_pose.pose.position.z = T
+        camera_base_pose.pose.orientation.w = 1.0
+
+        camera_base.primitives.append(camera_base_primitive)
+        camera_base.primitive_poses.append(camera_base_pose.pose)
+        camera_base.operation = CollisionObject.ADD
+        scene.world.collision_objects.append(camera_base)
+
+        camera_base_color = ObjectColor()
+        camera_base_color.id = "camera_base"
+        camera_base_color.color.r = 0.5  # grey
+        camera_base_color.color.g = 0.5
+        camera_base_color.color.b = 0.5
+        camera_base_color.color.a = 1.0
+        scene.object_colors.append(camera_base_color)
+
+        # Camera vertical
+        camera_vertical_L = W/10
+        camera_vertical_H = 0.5
+        camera_vertical = CollisionObject()
+        camera_vertical.id = "camera_vertical"
+        camera_vertical.header.frame_id = "camera_base"
+
+        camera_vertical_primitive = SolidPrimitive()
+        camera_vertical_primitive.type = SolidPrimitive.BOX
+        camera_vertical_primitive.dimensions = [camera_vertical_L, camera_vertical_L, camera_vertical_H]
+
+        camera_vertical_pose = PoseStamped()
+        camera_vertical_pose.header.frame_id = "camera_base"
+        camera_vertical_pose.pose.position.x = -0.2
+        camera_vertical_pose.pose.position.y = 0.0
+        camera_vertical_pose.pose.position.z = T/2 + camera_vertical_H / 2.0
+        camera_vertical_pose.pose.orientation.w = 1.0
+
+        camera_vertical.primitives.append(camera_vertical_primitive)
+        camera_vertical.primitive_poses.append(camera_vertical_pose.pose)
+        camera_vertical.operation = CollisionObject.ADD
+        scene.world.collision_objects.append(camera_vertical)
+
+        camera_vertical_color = ObjectColor()
+        camera_vertical_color.id = "camera_vertical"
+        camera_vertical_color.color.r = 0.5  # grey
+        camera_vertical_color.color.g = 0.5
+        camera_vertical_color.color.b = 0.5
+        camera_vertical_color.color.a = 1.0
+        scene.object_colors.append(camera_vertical_color)
+
+
+        # Camera horizontal
+        camera_horizontal_L = W/10
+        camera_horizontal_H = 0.5
+        camera_horizontal = CollisionObject()
+        camera_horizontal.id = "camera_horizontal"
+        camera_horizontal.header.frame_id = "camera_vertical"
+
+        camera_horizontal_primitive = SolidPrimitive()
+        camera_horizontal_primitive.type = SolidPrimitive.BOX
+        camera_horizontal_primitive.dimensions = [camera_horizontal_L, camera_horizontal_H, camera_horizontal_L]
+
+        camera_horizontal_pose = PoseStamped()
+        camera_horizontal_pose.header.frame_id = "camera_vertical"
+        camera_horizontal_pose.pose.position.x = 0.0
+        camera_horizontal_pose.pose.position.y = camera_horizontal_H/2 - camera_vertical_L/2
+        camera_horizontal_pose.pose.position.z = camera_vertical_H/2 + camera_horizontal_L/2
+        camera_horizontal_pose.pose.orientation.w = 1.0
+
+        camera_horizontal.primitives.append(camera_horizontal_primitive)
+        camera_horizontal.primitive_poses.append(camera_horizontal_pose.pose)
+        camera_horizontal.operation = CollisionObject.ADD
+        scene.world.collision_objects.append(camera_horizontal)
+
+        camera_horizontal_color = ObjectColor()
+        camera_horizontal_color.id = "camera_horizontal"
+        camera_horizontal_color.color.r = 0.5  # grey
+        camera_horizontal_color.color.g = 0.5
+        camera_horizontal_color.color.b = 0.5
+        camera_horizontal_color.color.a = 1.0
+        scene.object_colors.append(camera_horizontal_color)
+
+        # -------------------------------
         # Table legs (gray)
         leg_offsets = [
             ( L/2 - leg_T/2,  W/2 - leg_T/2),

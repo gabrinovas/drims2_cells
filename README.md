@@ -1,6 +1,6 @@
 ### drims2_cells
 
-This repository contains the robot descriptions, MoveIt configurations, and controller settings for the UR5e and ABB YuMi robots used in the DRIMS2 Summer School 2025.
+This repository contains the robot descriptions, MoveIt configurations, and controller settings for the UR10e, and PAL Tiago Pro robots used in the DRIMS2 Summer School 2025.
 
 To launch the robotic cells, use the following commands.
 

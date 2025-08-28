@@ -4,8 +4,8 @@ table_scene_publisher_node:
     table_width: 1.0
     table_thickness: 0.05
     leg_thickness: 0.05
-    leg_height: 0.7
-    table_pos_x: 1.3
+    leg_height: 0.74
+    table_pos_x: 1.1
     table_pos_y: 0.0
     table_pos_z: 0.0
 

@@ -71,7 +71,7 @@ class AddTableNode(Node):
 
         camera_base_primitive = SolidPrimitive()
         camera_base_primitive.type = SolidPrimitive.BOX
-        camera_base_primitive.dimensions = [L, W/10, T]
+        camera_base_primitive.dimensions = [L, W/8, 1.5*T]
 
         camera_base_pose = PoseStamped()
         camera_base_pose.header.frame_id = "table_top"
@@ -94,8 +94,8 @@ class AddTableNode(Node):
         scene.object_colors.append(camera_base_color)
 
         # Camera vertical
-        camera_vertical_L = W/10
-        camera_vertical_H = 0.5
+        camera_vertical_L = W/8
+        camera_vertical_H = 0.60
         camera_vertical = CollisionObject()
         camera_vertical.id = "camera_vertical"
         camera_vertical.header.frame_id = "camera_base"
@@ -106,7 +106,7 @@ class AddTableNode(Node):
 
         camera_vertical_pose = PoseStamped()
         camera_vertical_pose.header.frame_id = "camera_base"
-        camera_vertical_pose.pose.position.x = -0.2
+        camera_vertical_pose.pose.position.x = -0.37
         camera_vertical_pose.pose.position.y = 0.0
         camera_vertical_pose.pose.position.z = T/2 + camera_vertical_H / 2.0
         camera_vertical_pose.pose.orientation.w = 1.0
@@ -126,8 +126,8 @@ class AddTableNode(Node):
 
 
         # Camera horizontal
-        camera_horizontal_L = W/10
-        camera_horizontal_H = 0.5
+        camera_horizontal_L = W/8
+        camera_horizontal_H = 0.8
         camera_horizontal = CollisionObject()
         camera_horizontal.id = "camera_horizontal"
         camera_horizontal.header.frame_id = "camera_vertical"

@@ -114,6 +114,21 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          camera_holder_horizontal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          camera_holder_vertical:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          camera_holder_vertical_back:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           flange:
             Alpha: 1
             Show Axes: false
@@ -177,6 +192,11 @@ Visualization Manager:
             Show Trail: false
             Value: true
           table_top:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_top_raised:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -292,6 +312,21 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          camera_holder_horizontal:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          camera_holder_vertical:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          camera_holder_vertical_back:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           flange:
             Alpha: 1
             Show Axes: false
@@ -359,6 +394,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          table_top_raised:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           tip:
             Alpha: 1
             Show Axes: false
@@ -415,6 +455,14 @@ Visualization Manager:
           Value: false
         base_link_inertia:
           Value: false
+        camera_holder_horizontal:
+          Value: true
+        camera_holder_vertical:
+          Value: true
+        camera_holder_vertical_back:
+          Value: true
+        checkerboard:
+          Value: true
         flange:
           Value: false
         forearm_link:
@@ -443,6 +491,8 @@ Visualization Manager:
           Value: false
         table_top:
           Value: false
+        table_top_raised:
+          Value: true
         tip:
           Value: false
         tool0:
@@ -505,6 +555,14 @@ Visualization Manager:
                                   {}
                             ft_frame:
                               {}
+              checkerboard:
+                {}
+            table_top_raised:
+              camera_holder_vertical:
+                camera_holder_horizontal:
+                  {}
+                camera_holder_vertical_back:
+                  {}
       Update Interval: 0
       Value: true
   Enabled: true

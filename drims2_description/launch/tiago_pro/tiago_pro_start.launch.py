@@ -17,6 +17,16 @@ def generate_launch_description():
         default_value='true',
         description='If true, launches the Tiago Gazebo simulation'
     )
+    calib_args =[]
+    calib_args.append(DeclareLaunchArgument(name="frame_id",              default_value="base_footprint",  description="Base link of the robot respect to the checkerboard is referred"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboard_frame_id", default_value="checkerboard", description="Checkerboard frame id name"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboar_x",         default_value="0.639",     description="Checkerboar x"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboar_y",         default_value="-0.102",      description="Checkerboar y"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboar_z",         default_value="0.846",      description="Checkerboar z"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboard_qx",       default_value="0.999969",  description="Checkerboar qx"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboard_qy",       default_value="-0.0078714",  description="Checkerboar qy"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboard_qz",       default_value="0.0",        description="Checkerboar qz"))
+    calib_args.append(DeclareLaunchArgument(name="checkerboard_qw",       default_value="0.0",        description="Checkerboar qw"))  
 
     fake = LaunchConfiguration('fake')
 
@@ -96,6 +106,22 @@ def generate_launch_description():
         condition=UnlessCondition(fake)
     )
 
+    #calibration launch
+    camera_calibration_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "tiago_pro", "tiago_pro_camera_calibration.launch.py"])
+    camera_calibration_launch = IncludeLaunchDescription(
+        launch_description_source = PythonLaunchDescriptionSource(camera_calibration_path),
+        launch_arguments = [('frame_id',       LaunchConfiguration("frame_id")),
+                            ('child_frame_id', LaunchConfiguration("checkerboard_frame_id")),
+                            ('x',              LaunchConfiguration("checkerboar_x")),
+                            ('y',              LaunchConfiguration("checkerboar_y")),
+                            ('z',              LaunchConfiguration("checkerboar_z")),
+                            ('qx',             LaunchConfiguration("checkerboard_qx")),
+                            ('qy',             LaunchConfiguration("checkerboard_qy")),
+                            ('qz',             LaunchConfiguration("checkerboard_qz")),
+                            ('qw',             LaunchConfiguration("checkerboard_qw"))] 
+    )
+
+
     delayed_control_server = TimerAction(
         period=2.0,
         actions=[motion_server_launch]
@@ -125,12 +151,14 @@ def generate_launch_description():
     # Launch description including conditional Tiago launch and the table scene node
     return LaunchDescription([
         fake_arg,
+        *calib_args,
         tiago_launch,
         table_scene_node,
         static_tip_frame_publisher_node,
         set_param_once_node,
         tiago_pro_rviz_sim_launch,
         tiago_pro_rviz_real_launch,
+        camera_calibration_launch,
         delayed_control_server,
         gripper_node
         # tiago_pro_gripper_controller_launch,

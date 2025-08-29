@@ -23,7 +23,7 @@ class StaticTFPublisher(Node):
 
         # Set header: timestamp and frame IDs
         static_transform.header.stamp = self.get_clock().now().to_msg()
-        static_transform.header.frame_id = 'gripper_right_base_link'
+        static_transform.header.frame_id = 'gripper_left_base_link'
         static_transform.child_frame_id = 'tip'
 
         # Set translation: z from parameter, x and y are 0

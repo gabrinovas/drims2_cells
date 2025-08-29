@@ -1,17 +1,17 @@
 motion_server_node:
   ros__parameters:
-    move_group_name: "arm_right_torso"
-    end_effector_name: "gripper_right_base_link"
+    move_group_name: "arm_left_torso"
+    end_effector_name: "gripper_left_base_link"
     base_link_name: "base_footprint"
     joint_names:
       - 'torso_lift_joint'
-      - 'arm_right_1_joint'
-      - 'arm_right_2_joint'
-      - 'arm_right_3_joint'
-      - 'arm_right_4_joint'
-      - 'arm_right_5_joint'
-      - 'arm_right_6_joint'
-      - 'arm_right_7_joint'
+      - 'arm_left_1_joint'
+      - 'arm_left_2_joint'
+      - 'arm_left_3_joint'
+      - 'arm_left_4_joint'
+      - 'arm_left_5_joint'
+      - 'arm_left_6_joint'
+      - 'arm_left_7_joint'
 
     cartesian_max_step: 0.001
     cartesian_fraction_threshold: 0.9

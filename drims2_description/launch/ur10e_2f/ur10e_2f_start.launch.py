@@ -8,6 +8,8 @@ def generate_launch_description():
   launch_args = [
     DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"),
     DeclareLaunchArgument(name="robot_ip", default_value="192.168.254.100", description="Robot ip"),
+    DeclareLaunchArgument(name="robotiq_com_port", default_value="/dev/robotiq", description="Gripper com port"),
+    
     # Checkerboard calibration arguments
     DeclareLaunchArgument(name="frame_id",              default_value="base_link",    description="Base link of the robot respect to the checkerboard is referred"),
     DeclareLaunchArgument(name="checkerboard_frame_id", default_value="checkerboard", description="Checkerboard frame id name"),
@@ -32,7 +34,8 @@ def launch_setup(context):
   launch_controllers_launch  = IncludeLaunchDescription(
     launch_description_source = PythonLaunchDescriptionSource(launch_controllers_path),
     launch_arguments = [('fake', LaunchConfiguration("fake")),
-                        ('robot_ip', LaunchConfiguration("robot_ip"))]
+                        ('robot_ip', LaunchConfiguration("robot_ip")),
+                        ('robotiq_com_port', LaunchConfiguration("robotiq_com_port"))]
   )
 
   motion_server_path = PathJoinSubstitution([FindPackageShare("drims2_description"), "launch", "ur10e_2f", "ur10e_2f_motion_server.launch.py"])

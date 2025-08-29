@@ -6,7 +6,7 @@
    <xacro:arg name="ur_type" default="ur10e"/>
    <xacro:arg name="name" default="ur10e"/>
    <xacro:arg name="robot_ip" default="0.0.0.0" />
-   <xacro:arg name="robotiq_com_port" default="/dev/ttyUSB0" />
+   <xacro:arg name="robotiq_com_port" default="/dev/robotiq" />
 
    <!-- parameters -->
    <xacro:arg name="tf_prefix" default="" />

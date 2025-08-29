@@ -21,6 +21,9 @@ def launch_setup(context, *args, **kwargs):
       "use_fake_hardware:=", LaunchConfiguration("fake"),
       " ",
       "robot_ip:=", LaunchConfiguration("robot_ip"),
+      " ",
+      "robotiq_com_port:=", LaunchConfiguration("robotiq_com_port"),
+
   ])
   robot_description = {
       'robot_description': ParameterValue(robot_description_content, value_type=str)
@@ -106,6 +109,7 @@ def generate_launch_description():
   launch_args = []
   launch_args.append(DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"))
   launch_args.append(DeclareLaunchArgument(name="robot_ip", default_value="0.0.0.0", description="Robot ip"))
+  launch_args.append(DeclareLaunchArgument(name="robotiq_com_port", default_value="/dev/robotiq", description="Gripper com port"))
 
   ld = LaunchDescription(launch_args+[OpaqueFunction(function=launch_setup)])
     

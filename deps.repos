@@ -19,10 +19,6 @@ repositories:
     type: git
     url: https://github.com/MerlinLaboratory/abb_omnicore_ros2.git
     version: cari
-  onrobot_2fg7_gripper_description:
-    type: git
-    url: https://github.com/gabrinovas/onrobot_2fg7_gripper_description
-    version: main
   onrobot_ros2_driver:
     type: git
     url: https://github.com/gabrinovas/OnRobot_ROS2_Driver.git

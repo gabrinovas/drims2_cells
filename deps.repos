@@ -25,7 +25,7 @@ repositories:
     version: main
   onrobot_ros2_driver:
     type: git
-    url: https://github.com/gabrinovas/OnRobot_ROS2_Driver.git
+    url: https://github.com/tonydle/OnRobot_ROS2_Driver.git
     version: main
   ros2_robotiq_gripper:
     type: git

@@ -22,7 +22,7 @@ repositories:
   Modbus:
     type: git
     url: https://github.com/gabrinovas/modbus.git
-    version: main
+    version: master
   onrobot_2fg7_gripper_description:
     type: git
     url: https://github.com/gabrinovas/onrobot_2fg7_gripper_description

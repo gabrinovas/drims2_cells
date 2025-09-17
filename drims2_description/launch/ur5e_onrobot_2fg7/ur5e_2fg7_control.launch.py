@@ -72,7 +72,7 @@ def launch_setup(context, *args, **kwargs):
     # Reemplaza el launch del URCap de Robotiq con el driver del OnRobot para hardware real
     onrobot_driver_launch = IncludeLaunchDescription(
             launch_description_source = PythonLaunchDescriptionSource(
-                PathJoinSubstitution([FindPackageShare("onrobot_ros2_driver"), "launch", "onrobot_driver.launch.py"])
+                PathJoinSubstitution([FindPackageShare("onrobot_driver"), "launch", "onrobot_driver.launch.py"])
             ),
             condition=UnlessCondition(LaunchConfiguration('fake')),
             launch_arguments={'robot_ip': LaunchConfiguration("robot_ip")}.items() # O los argumentos que necesite

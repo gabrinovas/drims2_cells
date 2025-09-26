@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: drims2_description
+    relative_path: urdf/ur5e_2fg7/ur5e_2fg7_cell.urdf.xacro
+  srdf:
+    relative_path: config/platform.srdf
+  package_settings:
+    author_name: Gabriel Novas
+    author_email: gabriel.novas@aimen.es
+    generated_timestamp: 1753719646

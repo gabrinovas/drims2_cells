@@ -1,0 +1,21 @@
+motion_server_node:
+  ros__parameters:
+    move_group_name: "manipulator"
+    end_effector_name: "tip"
+    base_link_name: "base_link"
+    joint_names:
+      - 'shoulder_pan_joint'
+      - 'shoulder_lift_joint'
+      - 'elbow_joint'
+      - 'wrist_1_joint'
+      - 'wrist_2_joint'
+      - 'wrist_3_joint'
+
+    cartesian_max_step: 0.0025
+    cartesian_fraction_threshold: 0.0
+    cartesian_jump_threshold: 0.0
+    cartesian_avoid_collisions: True
+    max_velocity: 0.5
+    max_acceleration: 0.5
+    planner_id: BiTRRT
+    allowed_planning_time: 8.0

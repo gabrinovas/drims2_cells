@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="platform">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import platform urdf file -->
+    <xacro:include filename="$(find drims2_description)/urdf/ur5e_2fg7/ur5e_2fg7_cell.urdf.xacro" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="platform.ros2_control.xacro" />
+
+
+    <xacro:platform_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>

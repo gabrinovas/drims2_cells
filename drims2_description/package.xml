@@ -13,6 +13,7 @@
   <depend>ur_description</depend>
   <depend>robotiq_description</depend>
   <depend>robotiq_hande_driver</depend>
+  <depend>onrobot_2fg7_gripper_description</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

@@ -9,8 +9,9 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    # Update this to match your onrobot_driver package
     onrobot_2fg7_gripper_controller:
-      type: position_controllers/GripperActionController
+      type: gripper_controllers/GripperActionController
 
 joint_trajectory_controller:
   ros__parameters:
@@ -30,10 +31,10 @@ joint_trajectory_controller:
     constraints:
       goal_time: 0.0
 
+# Fix the gripper controller configuration
 onrobot_2fg7_gripper_controller:
   ros__parameters:
     type: gripper_controllers/GripperActionController
-    joint: left_finger_joint  # This line specifies which joint to control
     joints:
       - left_finger_joint
       - right_finger_joint
@@ -47,4 +48,6 @@ onrobot_2fg7_gripper_controller:
     stall_velocity_threshold: 0.001
     stall_timeout: 1.0
     goal_tolerance: 0.01
-    max_effort: 140.0
+    max_effort: 100.0
+    open_position: 0.08
+    closed_position: 0.0

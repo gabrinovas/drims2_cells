@@ -32,9 +32,9 @@ def launch_setup(context, *args, **kwargs):
     controller_manager_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[controllers_config,robot_description],
+        parameters=[controllers_config, robot_description],
         output="screen"
-        )
+    )
 
     joint_trajectory_controller = Node(
         package="controller_manager",
@@ -59,35 +59,42 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # Replace the onrobot_fake_controller_spawner section with:
+    # OnRobot 2FG7 Gripper Controller
     onrobot_gripper_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["onrobot_2fg7_gripper_controller", 
                 "--controller-manager", "/controller_manager"],
         output='screen',
-        # Add a delay to ensure the hardware is ready
-        condition=IfCondition(LaunchConfiguration("fake"))
     )
 
-    # Add a timer for the gripper controller to ensure proper startup sequence
+    # OnRobot Driver Node (separate node for hardware communication)
+    onrobot_driver_node = Node(
+        package='onrobot_driver',
+        executable='onrobot_driver_node',
+        name='onrobot_driver',
+        output='screen',
+        parameters=[{
+            'gripper_type': '2FG7',
+            'ip_address': '192.168.1.1',
+            'port': 502,
+            'max_width': 0.085,
+            'min_width': 0.0,
+            'max_force': 100.0,
+            'update_rate': 100.0,
+        }],
+        condition=UnlessCondition(LaunchConfiguration('fake'))
+    )
+
+    # Add delays for proper startup sequence
     delayed_gripper_controller = TimerAction(
-        period=3.0,
+        period=3.0,  # Start gripper controller after basic setup
         actions=[onrobot_gripper_controller_spawner]
     )
 
-    # OnRobot 2FG7 Driver for real hardware
-    onrobot_driver_node = Node(
-        package='onrobot_2fg7_driver',
-        executable='onrobot_2fg7_driver_node',
-        name='onrobot_2fg7_driver',
-        output='screen',
-        parameters=[{
-            'robotkit_ip': '192.168.1.100',  # Your RobotKit IP
-            'port': 80,
-            'timeout': 2.0,
-        }],
-        condition=UnlessCondition(LaunchConfiguration('fake'))
+    delayed_driver_node = TimerAction(
+        period=5.0,  # Start driver after controllers are ready
+        actions=[onrobot_driver_node]
     )
 
     what_to_launch = [
@@ -95,8 +102,8 @@ def launch_setup(context, *args, **kwargs):
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        delayed_gripper_controller,
-        onrobot_driver_node
+        delayed_driver_node,           # Start driver
+        delayed_gripper_controller,    # Then start gripper controller
     ]
 
     return what_to_launch

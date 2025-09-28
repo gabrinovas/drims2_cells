@@ -208,8 +208,29 @@
       <origin xyz="0 0 0.15" rpy="0 0 0"/>
    </joint>
 
-   <!-- Replace the fake hardware section with this: -->
+   <!-- OnRobot 2FG7 Gripper - Supports both simulation and real hardware -->
+   <xacro:if value="$(arg use_fake_hardware)">
+   <!-- Simulation mode -->
+   <ros2_control name="onrobot_2fg7_gripper" type="system">
+      <hardware>
+         <plugin>mock_components/GenericSystem</plugin>
+         <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
+      </hardware>
+      <joint name="left_finger_joint">
+         <command_interface name="position"/>
+         <state_interface name="position"/>
+         <state_interface name="velocity"/>
+      </joint>
+      <joint name="right_finger_joint">
+         <command_interface name="position"/>
+         <state_interface name="position"/>
+         <state_interface name="velocity"/>
+      </joint>
+   </ros2_control>
+   </xacro:if>
+
    <xacro:unless value="$(arg use_fake_hardware)">
+   <!-- Real hardware mode -->
    <ros2_control name="onrobot_2fg7_gripper" type="system">
       <hardware>
          <plugin>onrobot_driver/OnRobotGripperHardwareInterface</plugin>
@@ -234,24 +255,4 @@
       </joint>
    </ros2_control>
    </xacro:unless>
-
-   <xacro:if value="$(arg use_fake_hardware)">
-   <!-- Keep the fake hardware for simulation -->
-   <ros2_control name="onrobot_2fg7_gripper" type="system">
-      <hardware>
-         <plugin>mock_components/GenericSystem</plugin>
-         <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
-      </hardware>
-      <joint name="left_finger_joint">
-         <command_interface name="position"/>
-         <state_interface name="position"/>
-         <state_interface name="velocity"/>
-      </joint>
-      <joint name="right_finger_joint">
-         <command_interface name="position"/>
-         <state_interface name="position"/>
-         <state_interface name="velocity"/>
-      </joint>
-   </ros2_control>
-</xacro:if>
 </robot>

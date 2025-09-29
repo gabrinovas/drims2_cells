@@ -97,6 +97,22 @@ def launch_setup(context, *args, **kwargs):
         actions=[onrobot_driver_node]
     )
 
+    # Gripper Action Server (for MoveIt compatibility)
+    gripper_action_server = Node(
+        package='onrobot_driver',
+        executable='gripper_action_server',
+        name='gripper_action_server',
+        output='screen',
+        condition=UnlessCondition(LaunchConfiguration('fake'))
+    )
+
+    # Then add it to the delayed actions:
+    delayed_gripper_action_server = TimerAction(
+        period=4.0,
+        actions=[gripper_action_server]
+    )
+
+    # And add it to what_to_launch:
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
@@ -104,6 +120,7 @@ def launch_setup(context, *args, **kwargs):
         robot_state_publisher_node,
         delayed_driver_node,           # Start driver
         delayed_gripper_controller,    # Then start gripper controller
+        delayed_gripper_action_server,  # Start gripper action server
     ]
 
     return what_to_launch

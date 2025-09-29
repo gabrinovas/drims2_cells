@@ -10,8 +10,8 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 moveit_simple_controller_manager:
   controller_names:
     - joint_trajectory_controller
-    - onrobot_2fg7_gripper_controller
 
+  # Single controller for both arm and gripper
   joint_trajectory_controller:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
@@ -23,12 +23,5 @@ moveit_simple_controller_manager:
       - wrist_1_joint
       - wrist_2_joint
       - wrist_3_joint
-
-  # FIXED: Use JointTrajectory controller type for gripper too
-  onrobot_2fg7_gripper_controller:
-    type: FollowJointTrajectory
-    action_ns: follow_joint_trajectory
-    default: true
-    joints:
       - left_finger_joint
       - right_finger_joint

@@ -86,6 +86,15 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(LaunchConfiguration('fake'))
     )
 
+    # Simple Gripper Command Publisher (for simulation)
+    gripper_command_publisher = Node(
+        package='onrobot_driver',
+        executable='gripper_command_publisher',
+        name='gripper_command_publisher',
+        output='screen',
+        condition=IfCondition(LaunchConfiguration('fake'))  # Only in simulation
+    )
+
     # Add delays for proper startup sequence
     delayed_gripper_controller = TimerAction(
         period=3.0,  # Start gripper controller after basic setup
@@ -97,30 +106,19 @@ def launch_setup(context, *args, **kwargs):
         actions=[onrobot_driver_node]
     )
 
-    # Gripper Action Server (for MoveIt compatibility)
-    gripper_action_server = Node(
-        package='onrobot_driver',
-        executable='gripper_action_server',
-        name='gripper_action_server',
-        output='screen',
-        condition=UnlessCondition(LaunchConfiguration('fake'))
+    delayed_gripper_publisher = TimerAction(
+        period=6.0,  # Start gripper publisher last
+        actions=[gripper_command_publisher]
     )
 
-    # Then add it to the delayed actions:
-    delayed_gripper_action_server = TimerAction(
-        period=4.0,
-        actions=[gripper_action_server]
-    )
-
-    # And add it to what_to_launch:
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        delayed_driver_node,           # Start driver
-        delayed_gripper_controller,    # Then start gripper controller
-        delayed_gripper_action_server,  # Start gripper action server
+        delayed_driver_node,
+        delayed_gripper_controller,
+        delayed_gripper_publisher,
     ]
 
     return what_to_launch

@@ -59,14 +59,14 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # # OnRobot 2FG7 Gripper Controller
-    # onrobot_gripper_controller_spawner = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["onrobot_2fg7_gripper_controller", 
-    #             "--controller-manager", "/controller_manager"],
-    #     output='screen',
-    # )
+    # OnRobot 2FG7 Gripper Controller
+    onrobot_gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["onrobot_2fg7_gripper_controller", 
+                "--controller-manager", "/controller_manager"],
+        output='screen',
+    )
 
     # OnRobot Driver Node (separate node for hardware communication)
     onrobot_driver_node = Node(
@@ -95,11 +95,11 @@ def launch_setup(context, *args, **kwargs):
         condition=IfCondition(LaunchConfiguration('fake'))  # Only in simulation
     )
 
-    # # Add delays for proper startup sequence
-    # delayed_gripper_controller = TimerAction(
-    #     period=3.0,  # Start gripper controller after basic setup
-    #     actions=[onrobot_gripper_controller_spawner]
-    # )
+    # Add delays for proper startup sequence
+    delayed_gripper_controller = TimerAction(
+        period=3.0,  # Start gripper controller after basic setup
+        actions=[onrobot_gripper_controller_spawner]
+    )
 
     delayed_driver_node = TimerAction(
         period=5.0,  # Start driver after controllers are ready
@@ -111,16 +111,33 @@ def launch_setup(context, *args, **kwargs):
         actions=[gripper_command_publisher]
     )
 
+    # Add this after the other nodes:
+
+    # Gripper Action Bridge (helps with MoveIt execution)
+    gripper_action_bridge = Node(
+        package='onrobot_driver',
+        executable='gripper_action_bridge',
+        name='gripper_action_bridge',
+        output='screen',
+    )
+
+    # Add to delayed actions:
+    delayed_gripper_bridge = TimerAction(
+        period=4.0,
+        actions=[gripper_action_bridge]
+    )
+
+    # Update what_to_launch:
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
         delayed_driver_node,
-        # delayed_gripper_controller,
+        delayed_gripper_controller,
         delayed_gripper_publisher,
+        delayed_gripper_bridge,  # ADD THIS LINE
     ]
-
     return what_to_launch
 
 def generate_launch_description():

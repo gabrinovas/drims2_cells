@@ -25,11 +25,10 @@ moveit_simple_controller_manager:
       - wrist_2_joint
       - wrist_3_joint
 
-  # Gripper controller - FIXED: Use correct action namespace
+  # Gripper controller - UPDATED: Use GripperCommand action
   onrobot_2fg7_gripper_controller:
-    type: FollowJointTrajectory
-    action_ns: onrobot_2fg7_gripper_controller
+    type: GripperCommand  # CHANGED from FollowJointTrajectory
+    action_ns: onrobot_2fg7_gripper_controller  # KEEP THIS
     default: true
-    joints:
-      - left_finger_joint
-      - right_finger_joint
+    parallel: true
+    command_joint: left_finger_joint  # ADD THIS

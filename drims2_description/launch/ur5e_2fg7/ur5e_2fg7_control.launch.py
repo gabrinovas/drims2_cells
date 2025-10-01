@@ -68,6 +68,8 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
     )
 
+    # In the launch_setup function, update the onrobot_driver_node:
+
     # OnRobot Driver Node (separate node for hardware communication)
     onrobot_driver_node = Node(
         package='onrobot_driver',
@@ -111,23 +113,22 @@ def launch_setup(context, *args, **kwargs):
         actions=[gripper_command_publisher]
     )
 
-    # Add this after the other nodes:
-
-    # Gripper Action Bridge (helps with MoveIt execution)
+    # Add the action bridge node
     gripper_action_bridge = Node(
         package='onrobot_driver',
         executable='gripper_action_bridge',
         name='gripper_action_bridge',
         output='screen',
+        condition=UnlessCondition(LaunchConfiguration('fake'))  # Only for real hardware
     )
 
-    # Add to delayed actions:
+    # Add to delayed actions
     delayed_gripper_bridge = TimerAction(
         period=4.0,
         actions=[gripper_action_bridge]
     )
 
-    # Update what_to_launch:
+    # Update what_to_launch to include the bridge
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
@@ -136,7 +137,7 @@ def launch_setup(context, *args, **kwargs):
         delayed_driver_node,
         delayed_gripper_controller,
         delayed_gripper_publisher,
-        delayed_gripper_bridge,  # ADD THIS LINE
+        delayed_gripper_bridge,  # ADD THIS
     ]
     return what_to_launch
 

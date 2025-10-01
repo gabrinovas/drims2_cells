@@ -195,9 +195,10 @@
 
    <xacro:include filename="$(find onrobot_2fg7_gripper_description)/urdf/onrobot_2fg7.xacro" />
       
+   <!-- FIX: Added prefix to avoid duplicate base_link -->
    <xacro:onrobot_2fg7_gripper
       parent="tool0"
-      prefix=""
+      prefix="2fg7_"
    />
 
    <link name="tip"/>

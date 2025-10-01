@@ -86,14 +86,8 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(LaunchConfiguration('fake'))
     )
 
-    # Simple Gripper Command Publisher (for simulation)
-    gripper_command_publisher = Node(
-        package='onrobot_driver',
-        executable='gripper_command_publisher',
-        name='gripper_command_publisher',
-        output='screen',
-        condition=IfCondition(LaunchConfiguration('fake'))  # Only in simulation
-    )
+    # REMOVED: gripper_command_publisher - not needed
+    # REMOVED: gripper_action_bridge - not needed
 
     # Add delays for proper startup sequence
     delayed_gripper_controller = TimerAction(
@@ -106,28 +100,7 @@ def launch_setup(context, *args, **kwargs):
         actions=[onrobot_driver_node]
     )
 
-    delayed_gripper_publisher = TimerAction(
-        period=6.0,  # Start gripper publisher last
-        actions=[gripper_command_publisher]
-    )
-
-    # Add this after the other nodes:
-
-    # Gripper Action Bridge (helps with MoveIt execution)
-    gripper_action_bridge = Node(
-        package='onrobot_driver',
-        executable='gripper_action_bridge',
-        name='gripper_action_bridge',
-        output='screen',
-    )
-
-    # Add to delayed actions:
-    delayed_gripper_bridge = TimerAction(
-        period=4.0,
-        actions=[gripper_action_bridge]
-    )
-
-    # Update what_to_launch:
+    # UPDATE what_to_launch: Remove the bridge and publisher
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
@@ -135,8 +108,8 @@ def launch_setup(context, *args, **kwargs):
         robot_state_publisher_node,
         delayed_driver_node,
         delayed_gripper_controller,
-        delayed_gripper_publisher,
-        delayed_gripper_bridge,  # ADD THIS LINE
+        # REMOVED: delayed_gripper_publisher,
+        # REMOVED: delayed_gripper_bridge,
     ]
     return what_to_launch
 

@@ -232,27 +232,27 @@
    <xacro:unless value="$(arg use_fake_hardware)">
    <!-- Real hardware mode -->
    <ros2_control name="onrobot_2fg7_gripper" type="system">
-      <hardware>
-         <plugin>onrobot_driver/OnRobotGripperHardwareInterface</plugin>
-         <param name="ip_address">192.168.1.1</param>
-         <param name="port">502</param>
-         <param name="gripper_type">2FG7</param>
-         <param name="max_width">0.085</param>
-         <param name="min_width">0.0</param>
-         <param name="max_force">100.0</param>
-      </hardware>
-      <joint name="left_finger_joint">
-         <command_interface name="position"/>
-         <state_interface name="position"/>
-         <state_interface name="velocity"/>
-         <state_interface name="effort"/>
-      </joint>
-      <joint name="right_finger_joint">
-         <command_interface name="position"/>
-         <state_interface name="position"/>
-         <state_interface name="velocity"/>
-         <state_interface name="effort"/>
-      </joint>
+   <hardware>
+      <plugin>onrobot_driver/OnRobotGripperHardwareInterface</plugin>
+      <param name="ip_address">192.168.1.1</param>
+      <param name="port">502</param>
+      <param name="gripper_type">2FG7</param>
+      <param name="max_width">0.085</param>
+      <param name="min_width">0.0</param>
+      <param name="max_force">100.0</param>
+   </hardware>
+   <joint name="left_finger_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+   </joint>
+   <joint name="right_finger_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+   </joint>
    </ros2_control>
    </xacro:unless>
 </robot>

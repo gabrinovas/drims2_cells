@@ -1,18 +1,8 @@
-# MoveIt uses this configuration for controller management
-trajectory_execution:
-  allowed_execution_duration_scaling: 20.0
-  allowed_goal_duration_margin: 0.5
-  allowed_start_tolerance: 0.01
-  trajectory_duration_monitoring: true
-  
-moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
-
 moveit_simple_controller_manager:
   controller_names:
     - joint_trajectory_controller
     - onrobot_2fg7_gripper_controller
 
-  # Arm controller
   joint_trajectory_controller:
     type: FollowJointTrajectory
     action_ns: joint_trajectory_controller
@@ -25,7 +15,7 @@ moveit_simple_controller_manager:
       - wrist_2_joint
       - wrist_3_joint
 
-  # Gripper controller - FIXED: Use correct action namespace
+  # FIX: Use position controller for gripper instead of trajectory
   onrobot_2fg7_gripper_controller:
     type: FollowJointTrajectory
     action_ns: onrobot_2fg7_gripper_controller

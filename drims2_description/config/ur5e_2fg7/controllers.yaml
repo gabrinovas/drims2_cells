@@ -10,7 +10,7 @@ controller_manager:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     onrobot_2fg7_gripper_controller:
-      type: joint_trajectory_controller/GripperActionController
+      type: effort_controllers/GripperActionController  # Use effort control
 
 # Arm controller
 joint_trajectory_controller:
@@ -33,17 +33,34 @@ joint_trajectory_controller:
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
 
-# Gripper controller - FIXED: Added proper configuration
+# Gripper controller - EFFORT CONTROL for force/speed control
 onrobot_2fg7_gripper_controller:
   ros__parameters:
     joints:
       - left_finger_joint
       - right_finger_joint
     command_interfaces:
-      - position
+      - effort  # CHANGED from position to effort
     state_interfaces:
       - position
       - velocity
+      - effort   # ADD effort state interface
     goal_tolerance: 0.01
     stall_velocity_threshold: 0.001
     stall_timeout: 0.5
+    action_monitor_rate: 20.0
+    state_publish_rate: 50.0
+    
+    # Effort control specific parameters
+    max_effort: 20.0  # Maximum effort/force in N
+    
+    # PID gains for effort control (adjust these based on your gripper)
+    gains:
+      left_finger_joint:
+        p: 100.0
+        i: 0.0
+        d: 1.0
+      right_finger_joint:
+        p: 100.0
+        i: 0.0
+        d: 1.0

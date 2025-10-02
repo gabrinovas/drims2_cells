@@ -10,7 +10,7 @@ controller_manager:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     onrobot_2fg7_gripper_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
+      type: joint_trajectory_controller/GripperActionController
 
 # Arm controller
 joint_trajectory_controller:
@@ -35,17 +35,22 @@ joint_trajectory_controller:
 
 # Gripper controller - FIXED: Added proper configuration
 onrobot_2fg7_gripper_controller:
-  ros__parameters:
-    joints:
-      - left_finger_joint
-      - right_finger_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    allow_nonzero_velocity_at_trajectory_end: false
-    constraints:
-      goal_time: 0.0
-    state_publish_rate: 50.0
-    action_monitor_rate: 20.0
+  joints:
+    - left_finger_joint
+    - right_finger_joint
+  command_interfaces:
+    - position
+  state_interfaces:
+    - position
+    - velocity
+  goal_tolerance: 0.01
+  stall_velocity_threshold: 0.001
+  stall_timeout: 0.5
+  action_monitor_rate: 20.0
+  state_publish_rate: 50.0
+  constraints:
+    goal_time: 0.0
+    stopped_velocity_tolerance: 0.01
+    trajectory:
+      max_velocity: 0.1
+      max_acceleration: 0.1

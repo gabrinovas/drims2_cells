@@ -9,9 +9,6 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    onrobot_2fg7_gripper_controller:
-      type: joint_trajectory_controller/GripperActionController
-
 # Arm controller
 joint_trajectory_controller:
   ros__parameters:
@@ -35,6 +32,7 @@ joint_trajectory_controller:
 
 # Gripper controller - FIXED: Added proper configuration
 onrobot_2fg7_gripper_controller:
+  type: joint_trajectory_controller/GripperActionController
   joints:
     - left_finger_joint
     - right_finger_joint

@@ -40,6 +40,18 @@ def launch_setup(context):
 
     rviz_config = PathJoinSubstitution([FindPackageShare("drims2_description"),"config","ur5e_2fg7","rviz_config.rviz"]).perform(context)
 
+    # ADD THESE DEBUG LINES:
+    import os
+    print("=== RViz DEBUG ===")
+    print(f"Config path: {rviz_config}")
+    print(f"File exists: {os.path.exists(rviz_config)}")
+    if os.path.exists(rviz_config):
+        with open(rviz_config, 'r') as f:
+            content = f.read()
+            print(f"File size: {len(content)} bytes")
+            print(f"First 200 chars: {content[:200]}")
+    print("==================")
+
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",

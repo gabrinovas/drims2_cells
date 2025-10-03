@@ -3,11 +3,11 @@ controller_manager:
   ros__parameters:
     update_rate: 1000  # Hz
 
-    joint_trajectory_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
 
     onrobot_2fg7_gripper_controller:
       type: joint_trajectory_controller/JointTrajectoryController
@@ -33,7 +33,7 @@ joint_trajectory_controller:
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
 
-# Gripper controller - FIXED: Added proper configuration
+# Gripper controller
 onrobot_2fg7_gripper_controller:
   ros__parameters:
     joints:

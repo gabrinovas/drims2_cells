@@ -1,5 +1,8 @@
 moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
 
+# Add controller manager namespace
+controller_manager_ns: controller_manager
+
 moveit_simple_controller_manager:
   controller_names:
     - joint_trajectory_controller
@@ -7,7 +10,7 @@ moveit_simple_controller_manager:
 
   joint_trajectory_controller:
     type: FollowJointTrajectory
-    action_ns: joint_trajectory_controller
+    action_ns: follow_joint_trajectory
     default: true
     allow_trajectory_execution: true
     joints:
@@ -20,7 +23,7 @@ moveit_simple_controller_manager:
 
   onrobot_2fg7_gripper_controller:
     type: FollowJointTrajectory
-    action_ns: onrobot_2fg7_gripper_controller
+    action_ns: follow_joint_trajectory
     default: true
     allow_trajectory_execution: true
     joints:

@@ -9,6 +9,7 @@ moveit_simple_controller_manager:
     type: FollowJointTrajectory
     action_ns: joint_trajectory_controller
     default: true
+    allow_trajectory_execution: true
     joints:
       - shoulder_pan_joint
       - shoulder_lift_joint
@@ -17,11 +18,11 @@ moveit_simple_controller_manager:
       - wrist_2_joint
       - wrist_3_joint
 
-  # FIX: Use position controller for gripper instead of trajectory
   onrobot_2fg7_gripper_controller:
     type: FollowJointTrajectory
     action_ns: onrobot_2fg7_gripper_controller
     default: true
+    allow_trajectory_execution: true
     joints:
       - left_finger_joint
       - right_finger_joint

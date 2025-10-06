@@ -68,7 +68,7 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
     )
 
-    # OnRobot Driver Node (separate node for hardware communication)
+    # OnRobot Driver Node (ALWAYS start, but set simulation_mode based on fake parameter)
     onrobot_driver_node = Node(
         package='onrobot_driver',
         executable='onrobot_driver_node',
@@ -83,8 +83,7 @@ def launch_setup(context, *args, **kwargs):
             'max_force': 100.0,
             'update_rate': 100.0,
             'simulation_mode': LaunchConfiguration('fake'),  # Use fake parameter to determine mode
-        }],
-        condition=UnlessCondition(LaunchConfiguration('fake'))
+        }]
     )
 
     # Add delays for proper startup sequence
@@ -94,7 +93,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     delayed_driver_node = TimerAction(
-        period=5.0,  # Start driver after controllers are ready
+        period=2.0,  # Start driver after controllers are ready
         actions=[onrobot_driver_node]
     )
 
@@ -104,11 +103,8 @@ def launch_setup(context, *args, **kwargs):
         joint_trajectory_controller,
         robot_state_publisher_node,
         delayed_gripper_controller,
+        delayed_driver_node,  # Always add the driver node (with delay)
     ]
-    
-    # Only add driver node if not in fake mode
-    if not LaunchConfiguration('fake').perform(context):
-        what_to_launch.append(delayed_driver_node)
     
     return what_to_launch
 

@@ -82,12 +82,10 @@ def launch_setup(context, *args, **kwargs):
             'min_width': 0.0,
             'max_force': 100.0,
             'update_rate': 100.0,
+            'simulation_mode': LaunchConfiguration('fake'),  # Use fake parameter to determine mode
         }],
         condition=UnlessCondition(LaunchConfiguration('fake'))
     )
-
-    # REMOVED: gripper_command_publisher - not needed
-    # REMOVED: gripper_action_bridge - not needed
 
     # Add delays for proper startup sequence
     delayed_gripper_controller = TimerAction(
@@ -100,17 +98,18 @@ def launch_setup(context, *args, **kwargs):
         actions=[onrobot_driver_node]
     )
 
-    # UPDATE what_to_launch: Remove the bridge and publisher
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        delayed_driver_node,
         delayed_gripper_controller,
-        # REMOVED: delayed_gripper_publisher,
-        # REMOVED: delayed_gripper_bridge,
     ]
+    
+    # Only add driver node if not in fake mode
+    if not LaunchConfiguration('fake').perform(context):
+        what_to_launch.append(delayed_driver_node)
+    
     return what_to_launch
 
 def generate_launch_description():

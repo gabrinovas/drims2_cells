@@ -32,8 +32,9 @@ joint_trajectory_controller:
       goal_time: 0.0
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
+    action_name: follow_joint_trajectory
 
-# Gripper controller
+# Gripper controller - UPDATED joint names
 onrobot_2fg7_gripper_controller:
   ros__parameters:
     joints:
@@ -44,8 +45,9 @@ onrobot_2fg7_gripper_controller:
     state_interfaces:
       - position
       - velocity
-    allow_nonzero_velocity_at_trajectory_end: false
+    allow_nonzero_velocity_at_trajectory_end: true
     constraints:
-      goal_time: 0.0
+      goal_time: 5.0
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
+    action_name: follow_joint_trajectory

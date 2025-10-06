@@ -34,6 +34,7 @@
   <exec_depend>drims2_description</exec_depend>
 
   <exec_depend>onrobot_2fg7_gripper_description</exec_depend>
+  <exec_depend>onrobot_driver</exec_depend>
 
   <exec_depend>moveit_configs_utils</exec_depend>
   <exec_depend>moveit_ros_move_group</exec_depend>

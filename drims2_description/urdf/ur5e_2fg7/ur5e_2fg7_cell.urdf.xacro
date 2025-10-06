@@ -209,12 +209,13 @@
       <origin xyz="0 0 0.15" rpy="0 0 0"/>
    </joint>
 
-   <!-- OnRobot 2FG7 Gripper - SIMPLIFIED: Only simulation mode in hardware interface -->
-   <!-- Real hardware communication is handled by the separate onrobot_driver_node -->
+   <!-- OnRobot 2FG7 Gripper - UPDATED with better simulation parameters -->
    <ros2_control name="onrobot_2fg7_gripper" type="system">
       <hardware>
          <plugin>mock_components/GenericSystem</plugin>
          <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
+         <param name="state_following_offset">0.0</param>
+         <param name="calculate_dynamics">false</param>
       </hardware>
       <joint name="left_finger_joint">
          <command_interface name="position"/>

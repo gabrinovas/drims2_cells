@@ -68,7 +68,7 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
     )
 
-    # Use the network detection script
+    # FIX 1: Use CORRECT gripper parameters for 75mm-35mm range
     onrobot_driver_node = Node(
         package='onrobot_driver',
         executable='onrobot_driver_node',
@@ -76,24 +76,24 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
         parameters=[{
             'gripper_type': '2FG7',
-            'ip_address': LaunchConfiguration('onrobot_ip', default='192.168.1.1'),
+            'ip_address': LaunchConfiguration('onrobot_ip'),  # Use the new launch argument
             'port': 502,
-            'max_width': 0.085,
-            'min_width': 0.0, 
+            'max_width': 0.075,    # FIXED: 75mm max opening
+            'min_width': 0.035,    # FIXED: 35mm min opening
             'max_force': 100.0,
             'update_rate': 100.0,
             'simulation_mode': LaunchConfiguration('fake'),  # Auto-detect from fake param
         }]
     )
 
-    # Add delays for proper startup sequence
+    # FIX 2: Better startup sequence with longer delays
     delayed_gripper_controller = TimerAction(
-        period=3.0,  # Start gripper controller after basic setup
+        period=5.0,  # Start gripper controller after driver is ready
         actions=[onrobot_gripper_controller_spawner]
     )
 
     delayed_driver_node = TimerAction(
-        period=2.0,  # Start driver after controllers are ready
+        period=3.0,  # Start driver after basic controllers are ready
         actions=[onrobot_driver_node]
     )
 
@@ -102,16 +102,18 @@ def launch_setup(context, *args, **kwargs):
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        delayed_gripper_controller,
-        delayed_driver_node,  # Always add the driver node (with delay)
+        delayed_driver_node,        # Start driver before gripper controller
+        delayed_gripper_controller, # Gripper controller last
     ]
     
     return what_to_launch
 
 def generate_launch_description():
+    # FIX 3: Add onrobot_ip launch argument
     launch_args = []
     launch_args.append(DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"))
     launch_args.append(DeclareLaunchArgument(name="robot_ip", default_value="0.0.0.0", description="Robot ip"))
+    launch_args.append(DeclareLaunchArgument(name="onrobot_ip", default_value="192.168.1.1", description="OnRobot Compute Box IP"))
 
     ld = LaunchDescription(launch_args+[OpaqueFunction(function=launch_setup)])
 

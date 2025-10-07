@@ -193,13 +193,18 @@
       <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 0"/>
    </xacro:ur_robot>
 
+   <!-- FIX 1: Include the gripper description FIRST -->
    <xacro:include filename="$(find onrobot_2fg7_gripper_description)/urdf/onrobot_2fg7.xacro" />
-      
+   
    <!-- FIX: Added prefix to avoid duplicate base_link -->
    <xacro:onrobot_2fg7_gripper
       parent="tool0"
       prefix="2fg7_"
    />
+
+   <!-- FIX 2: Include transmission AFTER gripper is defined -->
+   <xacro:include filename="$(find onrobot_2fg7_gripper_description)/urdf/onrobot_2fg7.trans.xacro" />
+   <xacro:gripper_transmission/>
 
    <link name="tip"/>
 
@@ -209,13 +214,16 @@
       <origin xyz="0 0 0.15" rpy="0 0 0"/>
    </joint>
 
-   <!-- OnRobot 2FG7 Gripper - UPDATED with better simulation parameters -->
+   <!-- FIX 3: OnRobot 2FG7 Gripper with CORRECT joint limits -->
    <ros2_control name="onrobot_2fg7_gripper" type="system">
       <hardware>
          <plugin>mock_components/GenericSystem</plugin>
          <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
-         <param name="state_following_offset">0.0</param>
-         <param name="calculate_dynamics">false</param>
+         <!-- FIX: Add initial positions for gripper joints -->
+         <param name="state_initial_values">
+            left_finger_joint/position: 0.010
+            right_finger_joint/position: 0.010
+         </param>
       </hardware>
       <joint name="left_finger_joint">
          <command_interface name="position"/>

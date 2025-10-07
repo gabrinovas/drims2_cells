@@ -27,14 +27,14 @@
     </group_state>
     <!-- Update gripper group states for 75mm-35mm range -->
     <group_state name="open" group="gripper">
-        <!-- 75mm opening: each finger at 20mm from center -->
-        <joint name="left_finger_joint" value="0.020"/>
-        <joint name="right_finger_joint" value="0.020"/>
-    </group_state>
-    <group_state name="closed" group="gripper">
         <!-- 35mm opening: each finger at 0mm from center -->
         <joint name="left_finger_joint" value="0.0"/>
         <joint name="right_finger_joint" value="0.0"/>
+    </group_state>
+    <group_state name="closed" group="gripper">
+        <!-- 75mm opening: each finger at 20mm from center -->
+        <joint name="left_finger_joint" value="0.020"/>
+        <joint name="right_finger_joint" value="0.020"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper" parent_link="2fg7_base_link" group="gripper"/>

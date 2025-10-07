@@ -68,7 +68,7 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
     )
 
-    # OnRobot Driver Node (ALWAYS start, but set simulation_mode based on fake parameter)
+    # Use the network detection script
     onrobot_driver_node = Node(
         package='onrobot_driver',
         executable='onrobot_driver_node',
@@ -76,13 +76,13 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
         parameters=[{
             'gripper_type': '2FG7',
-            'ip_address': '192.168.1.1',
+            'ip_address': LaunchConfiguration('onrobot_ip', default='192.168.1.1'),
             'port': 502,
             'max_width': 0.085,
-            'min_width': 0.0,
+            'min_width': 0.0, 
             'max_force': 100.0,
             'update_rate': 100.0,
-            'simulation_mode': LaunchConfiguration('fake'),  # Use fake parameter to determine mode
+            'simulation_mode': LaunchConfiguration('fake'),  # Auto-detect from fake param
         }]
     )
 

@@ -11,6 +11,11 @@ motion_server_node:
       - 'wrist_2_joint'
       - 'wrist_3_joint'
 
+    # Add IK service configuration
+    ik_service_name: "/compute_ik"
+    planning_time: 5.0
+    planning_attempts: 5
+
     cartesian_max_step: 0.0025
     cartesian_fraction_threshold: 0.0
     cartesian_jump_threshold: 0.0

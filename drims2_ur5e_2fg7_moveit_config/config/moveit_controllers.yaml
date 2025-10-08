@@ -1,3 +1,8 @@
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+# FIX: Add controller manager namespace - THIS IS CRITICAL
+controller_manager_ns: /controller_manager
+
 moveit_simple_controller_manager:
   controller_names:
     - joint_trajectory_controller
@@ -24,5 +29,3 @@ moveit_simple_controller_manager:
     joints:
       - left_finger_joint
       - right_finger_joint
-    # ADD this to ensure joint order matches:
-    joint_names: [left_finger_joint, right_finger_joint]

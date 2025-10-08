@@ -85,15 +85,15 @@ joint_limits:
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 100.0
-    max_position: 0.020  # 20mm per finger (35mm to 75mm total opening)
+    max_position: 0.020    # 20mm per finger (75mm total opening)
     max_velocity: 0.5
-    min_position: 0.0
+    min_position: 0.0      # 0mm per finger (35mm total opening)
   right_finger_joint:
     has_acceleration_limits: false
     has_effort_limits: true
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 100.0
-    max_position: 0.020  # 20mm per finger (35mm to 75mm total opening)
+    max_position: 0.0      # 0mm per finger (35mm total opening)  
     max_velocity: 0.5
-    min_position: 0.0
+    min_position: -0.020   # -20mm per finger (75mm total opening)

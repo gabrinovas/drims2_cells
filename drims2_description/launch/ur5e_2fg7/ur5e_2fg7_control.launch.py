@@ -59,7 +59,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # OnRobot 2FG7 Gripper Controller
+    # OnRobot 2FG7 Gripper Controller - FIXED: Using effort controller
     onrobot_gripper_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -68,7 +68,7 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
     )
 
-    # FIX 1: Use CORRECT gripper parameters for 75mm-35mm range
+    # OnRobot Driver Node - FIXED: Proper parameters for 35mm-75mm range
     onrobot_driver_node = Node(
         package='onrobot_driver',
         executable='onrobot_driver_node',
@@ -76,17 +76,19 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
         parameters=[{
             'gripper_type': '2FG7',
-            'ip_address': LaunchConfiguration('onrobot_ip'),  # Use the new launch argument
+            'ip_address': LaunchConfiguration('onrobot_ip'),
             'port': 502,
-            'max_width': 0.075,    # FIXED: 75mm max opening
-            'min_width': 0.035,    # FIXED: 35mm min opening
+            'max_width': 0.075,    # 75mm max opening (total distance between fingers)
+            'min_width': 0.035,    # 35mm min opening (total distance between fingers)
             'max_force': 100.0,
             'update_rate': 100.0,
-            'simulation_mode': LaunchConfiguration('fake'),  # Auto-detect from fake param
+            'simulation_mode': LaunchConfiguration('fake'),
         }]
     )
 
-    # FIX 2: Better startup sequence with longer delays
+    # FIXED: Better startup sequence
+    # 1. Start basic controllers and driver
+    # 2. Start gripper controller after driver is ready
     delayed_gripper_controller = TimerAction(
         period=5.0,  # Start gripper controller after driver is ready
         actions=[onrobot_gripper_controller_spawner]
@@ -109,7 +111,6 @@ def launch_setup(context, *args, **kwargs):
     return what_to_launch
 
 def generate_launch_description():
-    # FIX 3: Add onrobot_ip launch argument
     launch_args = []
     launch_args.append(DeclareLaunchArgument(name="fake", default_value="true", description="use fake hardware"))
     launch_args.append(DeclareLaunchArgument(name="robot_ip", default_value="0.0.0.0", description="Robot ip"))

@@ -34,12 +34,15 @@ joint_trajectory_controller:
     action_monitor_rate: 20.0
     action_name: follow_joint_trajectory
 
-# Gripper controller - CORRECTED joint limits
+# Gripper controller - FIXED to match actual joint order
 onrobot_2fg7_gripper_controller:
   ros__parameters:
+    # FIX: Use the actual joint order from joint_states
     joints:
-      - left_finger_joint
       - right_finger_joint
+      - left_finger_joint
+    # Explicit joint names to ensure order
+    joint_names: [right_finger_joint, left_finger_joint]
     command_interfaces:
       - position
     state_interfaces:
@@ -51,11 +54,3 @@ onrobot_2fg7_gripper_controller:
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
     action_name: follow_joint_trajectory
-    # ADD joint limits for controller
-    joint_limits:
-      left_finger_joint:
-        min_position: 0.0
-        max_position: 0.020
-      right_finger_joint:
-        min_position: 0.0  
-        max_position: 0.020

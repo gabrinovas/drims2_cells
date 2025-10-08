@@ -26,9 +26,9 @@ moveit_simple_controller_manager:
     action_ns: follow_joint_trajectory
     default: true
     allow_trajectory_execution: true
-    # FIX: Explicitly define joint order to match controller
+    # FIX: Use the ACTUAL joint order from joint_states
     joints:
-      - left_finger_joint
       - right_finger_joint
-    # ADD this to ensure joint order matches exactly:
-    joint_names: [left_finger_joint, right_finger_joint]
+      - left_finger_joint
+    # Explicitly define the joint order to match reality
+    joint_names: [right_finger_joint, left_finger_joint]

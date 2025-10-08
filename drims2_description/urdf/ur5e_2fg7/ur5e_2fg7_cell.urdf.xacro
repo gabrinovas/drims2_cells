@@ -221,10 +221,11 @@
          <plugin>mock_components/GenericSystem</plugin>
          <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
          <!-- FIX: Force initial positions for gripper joints -->
+         <!-- FIX: Correct initial positions for gripper joints -->
          <param name="state_initial_values">
-            left_finger_joint/position: 0.010
+            left_finger_joint/position: 0.010  # Start at mid-position (55mm opening)
             left_finger_joint/velocity: 0.0
-            right_finger_joint/position: 0.010  
+            right_finger_joint/position: -0.010  # Mirror of left finger  
             right_finger_joint/velocity: 0.0
          </param>
       </hardware>

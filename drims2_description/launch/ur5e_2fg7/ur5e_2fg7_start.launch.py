@@ -31,13 +31,14 @@ def launch_setup(context):
       launch_arguments = [('fake', LaunchConfiguration("fake"))]
   )
 
-  delayed_control_server = TimerAction(
-      period=2.0,
+  # FIX: Add proper delay for motion server to wait for MoveIt
+  delayed_motion_server = TimerAction(
+      period=15.0,  # Wait longer for MoveIt to be fully ready
       actions=[motion_server_launch]
   )
 
   return [
     launch_moveit_and_robot_description_launch,
     launch_controllers_launch,
-    delayed_control_server
+    delayed_motion_server  # Use the delayed version
   ]

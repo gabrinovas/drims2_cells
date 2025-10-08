@@ -153,6 +153,7 @@
    xyz="0 0 1.2"
    size="${table_length} ${table_width} 0.01"/>
 
+   <!-- MAIN ROBOT - This includes the complete UR5e robot -->
    <xacro:ur_robot
       name="$(arg name)"
       tf_prefix="$(arg tf_prefix)"
@@ -193,36 +194,38 @@
       <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 0"/>
    </xacro:ur_robot>
 
-   <!-- FIX 1: Include the gripper description FIRST -->
+   <!-- GRIPPER ATTACHMENT -->
    <xacro:include filename="$(find onrobot_2fg7_gripper_description)/urdf/onrobot_2fg7.xacro" />
    
-   <!-- FIX: Added prefix to avoid duplicate base_link -->
+   <!-- Add gripper to the robot -->
    <xacro:onrobot_2fg7_gripper
       parent="tool0"
       prefix="2fg7_"
    />
 
-   <!-- FIX 2: Include transmission AFTER gripper is defined -->
+   <!-- Include transmission AFTER gripper is defined -->
    <xacro:include filename="$(find onrobot_2fg7_gripper_description)/urdf/onrobot_2fg7.trans.xacro" />
    <xacro:gripper_transmission/>
 
+   <!-- End effector tip for MoveIt -->
    <link name="tip"/>
-
    <joint name="tool0_to_tip" type="fixed">
       <parent link="tool0"/>
       <child link="tip"/>
       <origin xyz="0 0 0.15" rpy="0 0 0"/>
    </joint>
 
-   <!-- FIX 3: OnRobot 2FG7 Gripper with CORRECT joint limits -->
+   <!-- ROS2 Control for gripper ONLY (UR robot has its own control in the macro) -->
    <ros2_control name="onrobot_2fg7_gripper" type="system">
       <hardware>
          <plugin>mock_components/GenericSystem</plugin>
          <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
-         <!-- FIX: Add initial positions for gripper joints -->
+         <!-- FIX: Force initial positions for gripper joints -->
          <param name="state_initial_values">
             left_finger_joint/position: 0.010
-            right_finger_joint/position: 0.010
+            left_finger_joint/velocity: 0.0
+            right_finger_joint/position: 0.010  
+            right_finger_joint/velocity: 0.0
          </param>
       </hardware>
       <joint name="left_finger_joint">

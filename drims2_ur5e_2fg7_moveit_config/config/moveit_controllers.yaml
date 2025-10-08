@@ -1,6 +1,5 @@
 moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
 
-# FIX: Add controller manager namespace
 controller_manager_ns: /controller_manager
 
 moveit_simple_controller_manager:
@@ -26,9 +25,7 @@ moveit_simple_controller_manager:
     action_ns: follow_joint_trajectory
     default: true
     allow_trajectory_execution: true
-    # FIX: Use the ACTUAL joint order from joint_states
+    # FIX: Match the actual joint order
     joints:
       - right_finger_joint
       - left_finger_joint
-    # Explicitly define the joint order to match reality
-    joint_names: [right_finger_joint, left_finger_joint]

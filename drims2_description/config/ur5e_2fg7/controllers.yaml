@@ -37,7 +37,7 @@ joint_trajectory_controller:
 onrobot_2fg7_gripper_controller:
   ros__parameters:
     # Control only the left finger joint (right finger follows via mimic)
-    joint: left_finger_joint
+    joint: 2fg7_left_finger_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
     command_interfaces:
       - position

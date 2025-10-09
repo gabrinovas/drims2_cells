@@ -8,5 +8,5 @@ initial_positions:
   wrist_2_joint: 0
   wrist_3_joint: 0
   # Add the OnRobot 2FG7 gripper joints here
-  left_finger_joint: 0
-  right_finger_joint: 0
+  2fg7_left_finger_joint: 0
+  2fg7_right_finger_joint: 0

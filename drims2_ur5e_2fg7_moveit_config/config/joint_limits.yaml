@@ -78,22 +78,22 @@ joint_limits:
     max_position:  6.28
     max_velocity:  3.14
     min_position: -6.28
-  # Add these to your existing joint_limits.yaml
-  2fg7_left_finger_joint:
+  # Update joint names to match actual gripper joints
+  left_finger_joint:
     has_acceleration_limits: false
     has_effort_limits: true
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 100.0
-    max_position: 0.020    # 20mm per finger (75mm total opening)
+    max_position: 0.020
     max_velocity: 0.5
-    min_position: 0.0      # 0mm per finger (35mm total opening)
-  2fg7_right_finger_joint:
+    min_position: 0.0
+  right_finger_joint:
     has_acceleration_limits: false
     has_effort_limits: true
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 100.0
-    max_position: 0.0      # 0mm per finger (35mm total opening)  
+    max_position: 0.0
     max_velocity: 0.5
-    min_position: -0.020   # -20mm per finger (75mm total opening)
+    min_position: -0.020

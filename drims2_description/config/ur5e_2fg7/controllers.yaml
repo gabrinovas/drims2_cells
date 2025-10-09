@@ -9,7 +9,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     onrobot_2fg7_gripper_controller:
-      type: effort_controllers/JointPositionController
+      type: position_controllers/JointGroupPositionController
 
 # Arm controller
 joint_trajectory_controller:
@@ -33,12 +33,12 @@ joint_trajectory_controller:
     action_monitor_rate: 20.0
     action_name: follow_joint_trajectory
 
-# Gripper controller - FIXED: Using effort controller with correct joint mapping
+# Gripper controller - FIXED: Using position controller with correct joint names
 onrobot_2fg7_gripper_controller:
   ros__parameters:
-    # Control only the left finger joint (right finger follows via mimic)
-    joint: 2fg7_left_finger_joint
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    joints:
+      - left_finger_joint
+      - right_finger_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -48,3 +48,6 @@ onrobot_2fg7_gripper_controller:
     min_position: 0.0      # 35mm total opening (each finger at 0mm)
     max_position: 0.020    # 75mm total opening (each finger at 20mm)
     state_publish_rate: 50.0
+    allow_nonzero_velocity_at_trajectory_end: true
+    constraints:
+      goal_time: 5.0

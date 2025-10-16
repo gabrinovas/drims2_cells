@@ -46,12 +46,14 @@
 
    <link name="world"/>
 
+   <!-- TABLE PROPERTIES -->
    <xacro:property name="table_length" value="1.2"/>
    <xacro:property name="table_width" value="0.7"/>
    <xacro:property name="table_height" value="0.75"/>
    <xacro:property name="table_thickness" value="0.063"/>
    <xacro:property name="leg_width" value="0.05"/>
 
+   <!-- TABLE DEFINITION -->
    <link name="table_top">
       <visual>
          <geometry>
@@ -73,10 +75,11 @@
       </collision>
    </link>
 
+   <!-- Table rotated 90 degrees (1.5708 radians) around Z-axis -->
    <joint name="world_to_table" type="fixed">
       <parent link="world"/>
       <child link="table_top"/>
-      <origin xyz="0 0 ${table_height}" rpy="0 0 0"/>
+      <origin xyz="0 0 ${table_height}" rpy="0 0 1.5708"/>
    </joint>
 
    <xacro:macro name="table_leg" params="name x y z">
@@ -103,7 +106,8 @@
       <joint name="joint_${name}" type="fixed">
          <parent link="world"/>
          <child link="${name}"/>
-         <origin xyz="${x} ${y} 0" rpy="0 0 0"/>
+         <!-- Leg positions also rotated 90 degrees -->
+         <origin xyz="${-y} ${x} 0" rpy="0 0 1.5708"/>
          </joint>
    </xacro:macro>
 
@@ -137,21 +141,145 @@
    </joint>
    </xacro:macro>
 
+   <!-- Safety barriers positions adjusted for 90-degree rotation -->
    <xacro:safety_barrier name="barrier_back"
-   xyz="0 ${-table_length/2 + 0.4} 0.3"
-   size="${table_length} 0.01 0.8"/>
+   xyz="${-table_width/2 - 0.3} 0 0.3"
+   size="0.01 ${table_length} 0.8"/>
 
    <xacro:safety_barrier name="barrier_left"
-   xyz="${-table_length/2 - 0.3} 0 0.3"
-   size="0.01 ${table_width} 0.8"/>
+   xyz="0 ${-table_length/2 - 0.3} 0.3"
+   size="${table_width} 0.01 0.8"/>
 
    <xacro:safety_barrier name="barrier_right"
-   xyz="-0.4 0 0.3"
-   size="0.01 ${table_width} 0.8"/>
+   xyz="0 ${table_length/2 + 0.3} 0.3"
+   size="${table_width} 0.01 0.8"/>
 
    <xacro:safety_barrier name="barrier_top"
    xyz="0 0 1.2"
-   size="${table_length} ${table_width} 0.01"/>
+   size="${table_width} ${table_length} 0.01"/>
+
+   <!-- CONVEYOR BELT PROPERTIES -->
+   <xacro:property name="conveyor_length" value="1.5"/>
+   <xacro:property name="conveyor_width" value="0.4"/>
+   <xacro:property name="conveyor_height" value="0.85"/>
+   <xacro:property name="conveyor_thickness" value="0.02"/>
+   <xacro:property name="conveyor_leg_width" value="0.04"/>
+
+   <!-- CONVEYOR BELT DEFINITION -->
+   <!-- Conveyor belt surface -->
+   <link name="conveyor_belt">
+      <visual>
+         <geometry>
+            <box size="${conveyor_length} ${conveyor_width} ${conveyor_thickness}"/>
+         </geometry>
+         <origin xyz="0 0 -${conveyor_thickness/2}" rpy="0 0 0"/>
+         <material name="dark_green_rubber">
+            <color rgba="0 0.43 0 1"/>
+         </material>
+      </visual>
+      <collision>
+         <geometry>
+            <box size="${conveyor_length} ${conveyor_width} ${conveyor_thickness}"/>
+         </geometry>
+         <origin xyz="0 0 -${conveyor_thickness/2}" rpy="0 0 0"/>
+      </collision>
+   </link>
+
+   <!-- Conveyor frame -->
+   <link name="conveyor_frame">
+      <visual>
+         <geometry>
+            <box size="${conveyor_length} ${conveyor_width + 0.1} 0.05"/>
+         </geometry>
+         <origin xyz="0 0 -0.025" rpy="0 0 0"/>
+         <material name="aluminum">
+            <color rgba="0.8 0.8 0.8 1"/>
+         </material>
+      </visual>
+      <collision>
+         <geometry>
+            <box size="${conveyor_length} ${conveyor_width + 0.1} 0.05"/>
+         </geometry>
+         <origin xyz="0 0 -0.025" rpy="0 0 0"/>
+      </collision>
+   </link>
+
+   <!-- Joint connecting conveyor belt to frame -->
+   <joint name="conveyor_belt_to_frame" type="fixed">
+      <parent link="conveyor_frame"/>
+      <child link="conveyor_belt"/>
+      <origin xyz="0 0 ${conveyor_thickness/2 + 0.025}" rpy="0 0 0"/>
+   </joint>
+
+   <!-- Conveyor positioned in FRONT of the table and rotated 90 degrees -->
+   <joint name="world_to_conveyor" type="fixed">
+      <parent link="world"/>
+      <child link="conveyor_frame"/>
+      <origin xyz="${table_width/2 + conveyor_width/2 + 0.05} 0 ${conveyor_height}" rpy="0 0 1.5708"/>
+   </joint>
+
+   <!-- Conveyor legs -->
+   <xacro:macro name="conveyor_leg" params="name x y z">
+      <link name="${name}">
+         <visual>
+            <geometry>
+               <box size="${conveyor_leg_width} ${conveyor_leg_width} ${z}"/>
+            </geometry>
+            <origin xyz="0 0 ${z / 2}" rpy="0 0 0"/>
+            <material name="steel">
+               <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+         </visual>
+         <collision>
+            <geometry>
+               <box size="${conveyor_leg_width} ${conveyor_leg_width} ${z}"/>
+            </geometry>
+            <origin xyz="0 0 ${z / 2}" rpy="0 0 0"/>
+         </collision>
+      </link>
+      <joint name="joint_${name}" type="fixed">
+         <parent link="world"/>
+         <child link="${name}"/>
+         <!-- Conveyor leg positions also rotated 90 degrees -->
+         <origin xyz="${-y} ${x} 0" rpy="0 0 1.5708"/>
+      </joint>
+   </xacro:macro>
+
+   <!-- FIXED: Conveyor legs positioned at the correct corners for rotated conveyor -->
+   <!-- Since conveyor is rotated 90 degrees, we need to swap length/width in positioning -->
+   <xacro:conveyor_leg name="conveyor_leg_1" x="${-conveyor_length / 2 + conveyor_leg_width / 2}" y="${-(table_width/2 + conveyor_width/2 + 0.05 + conveyor_width / 2 - conveyor_leg_width / 2)}" z="${conveyor_height}"/>
+   <xacro:conveyor_leg name="conveyor_leg_2" x="${-conveyor_length / 2 + conveyor_leg_width / 2}" y="${-(table_width/2 + conveyor_width/2 + 0.05 - conveyor_width / 2 + conveyor_leg_width / 2)}" z="${conveyor_height}"/>
+   <xacro:conveyor_leg name="conveyor_leg_3" x="${conveyor_length / 2 - conveyor_leg_width / 2}" y="${-(table_width/2 + conveyor_width/2 + 0.05 + conveyor_width / 2 - conveyor_leg_width / 2)}" z="${conveyor_height}"/>
+   <xacro:conveyor_leg name="conveyor_leg_4" x="${conveyor_length / 2 - conveyor_leg_width / 2}" y="${-(table_width/2 + conveyor_width/2 + 0.05 - conveyor_width / 2 + conveyor_leg_width / 2)}" z="${conveyor_height}"/>
+
+   <!-- Optional: Conveyor end rollers -->
+   <!-- <xacro:macro name="conveyor_roller" params="name x_offset">
+      <link name="${name}">
+         <visual>
+            <geometry>
+               <cylinder length="${conveyor_width}" radius="0.05"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+            <material name="rubber">
+               <color rgba="0.3 0.3 0.3 1"/>
+            </material>
+         </visual>
+         <collision>
+            <geometry>
+               <cylinder length="${conveyor_width}" radius="0.05"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+         </collision>
+      </link>
+      <joint name="joint_${name}" type="fixed">
+         <parent link="conveyor_frame"/>
+         <child link="${name}"/>
+         <origin xyz="${x_offset} 0 0.025" rpy="0 0 0"/>
+      </joint>
+   </xacro:macro>
+
+   <xacro:conveyor_roller name="conveyor_roller_front" x_offset="${conveyor_length/2 - 0.05}"/>
+   <xacro:conveyor_roller name="conveyor_roller_back" x_offset="${-conveyor_length/2 + 0.05}"/> -->
 
    <!-- MAIN ROBOT - This includes the complete UR5e robot -->
    <xacro:ur_robot
@@ -191,7 +319,8 @@
       script_sender_port="$(arg script_sender_port)"
       trajectory_port="$(arg trajectory_port)"
       >
-      <origin xyz="0 ${-table_width/2.0 + 0.175} 0" rpy="0 0 0"/>
+      <!-- Robot origin adjusted for the rotated table -->
+      <origin xyz="0.125 ${-table_width/2.0 + 0.225} 0" rpy="0 0 0"/>
    </xacro:ur_robot>
 
    <!-- GRIPPER ATTACHMENT -->

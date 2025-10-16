@@ -47,9 +47,9 @@
    <link name="world"/>
 
    <xacro:property name="table_length" value="1.2"/>
-   <xacro:property name="table_width" value="0.6"/>
+   <xacro:property name="table_width" value="0.7"/>
    <xacro:property name="table_height" value="0.75"/>
-   <xacro:property name="table_thickness" value="0.05"/>
+   <xacro:property name="table_thickness" value="0.063"/>
    <xacro:property name="leg_width" value="0.05"/>
 
    <link name="table_top">
@@ -58,8 +58,8 @@
             <box size="${table_length} ${table_width} ${table_thickness}"/>
          </geometry>
          <origin xyz="0 0 -${table_thickness/2}" rpy="0 0 0"/>
-         <material name="brown">
-            <color rgba="0.4 0.2 0 1"/>
+         <material name="white">
+            <color rgba="1 1 1 1"/>
          </material>
       </visual>
       <collision>
@@ -86,8 +86,8 @@
                <box size="${leg_width} ${leg_width} ${z}"/>
             </geometry>
             <origin xyz="0 0 ${z / 2}" rpy="0 0 0"/>
-            <material name="black">
-               <color rgba="0.1 0.1 0.1 1"/>
+            <material name="gray">
+               <color rgba="0.53 0.53 0.53 1"/>
             </material>
          </visual>
          <collision>
@@ -138,16 +138,16 @@
    </xacro:macro>
 
    <xacro:safety_barrier name="barrier_back"
+   xyz="0 ${-table_length/2 + 0.4} 0.3"
+   size="${table_length} 0.01 0.8"/>
+
+   <xacro:safety_barrier name="barrier_left"
    xyz="${-table_length/2 - 0.3} 0 0.3"
    size="0.01 ${table_width} 0.8"/>
 
-   <xacro:safety_barrier name="barrier_left"
-   xyz="0 ${-table_width/2 - 0.3} 0.3"
-   size="${table_length} 0.01 0.8"/>
-
    <xacro:safety_barrier name="barrier_right"
-   xyz="0 ${table_width/2 + 0.3} 0.3"
-   size="${table_length} 0.01 0.8"/>
+   xyz="-0.4 0 0.3"
+   size="0.01 ${table_width} 0.8"/>
 
    <xacro:safety_barrier name="barrier_top"
    xyz="0 0 1.2"
@@ -191,7 +191,7 @@
       script_sender_port="$(arg script_sender_port)"
       trajectory_port="$(arg trajectory_port)"
       >
-      <origin xyz="${-table_length/2.0 + 0.1} 0 0" rpy="0 0 0"/>
+      <origin xyz="0 ${-table_width/2.0 + 0.175} 0" rpy="0 0 0"/>
    </xacro:ur_robot>
 
    <!-- GRIPPER ATTACHMENT -->

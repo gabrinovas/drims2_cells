@@ -59,16 +59,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # # OnRobot 2FG7 Gripper Controller - FIXED: Using effort controller
-    # onrobot_gripper_controller_spawner = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["onrobot_2fg7_gripper_controller", 
-    #             "--controller-manager", "/controller_manager"],
-    #     output='screen',
-    # )
-
-    # OnRobot Driver Node - FIXED: Proper parameters for 35mm-75mm range
+    # OnRobot Driver Node - FIXED: Only use OnRobot driver for gripper control
     onrobot_driver_node = Node(
         package='onrobot_driver',
         executable='onrobot_driver_node',
@@ -86,26 +77,13 @@ def launch_setup(context, *args, **kwargs):
         }]
     )
 
-    # # FIXED: Better startup sequence
-    # # 1. Start basic controllers and driver
-    # # 2. Start gripper controller after driver is ready
-    # delayed_gripper_controller = TimerAction(
-    #     period=5.0,  # Start gripper controller after driver is ready
-    #     actions=[onrobot_gripper_controller_spawner]
-    # )
-
-    delayed_driver_node = TimerAction(
-        period=3.0,  # Start driver after basic controllers are ready
-        actions=[onrobot_driver_node]
-    )
-
+    # FIXED: Removed gripper controller - using only OnRobot driver
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        delayed_driver_node,        # Start driver before gripper controller
-        # delayed_gripper_controller, # Gripper controller last
+        onrobot_driver_node,  # Start OnRobot driver directly
     ]
     
     return what_to_launch

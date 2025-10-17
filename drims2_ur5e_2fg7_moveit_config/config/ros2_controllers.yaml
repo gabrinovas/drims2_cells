@@ -32,7 +32,6 @@ onrobot_2fg7_gripper_controller:
   ros__parameters:
     joints:
       - left_finger_joint
-      - right_finger_joint
     command_interfaces:
       - position
     state_interfaces:

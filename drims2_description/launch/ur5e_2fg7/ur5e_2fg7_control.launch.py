@@ -59,7 +59,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # OnRobot Driver Node - FIXED: Only use OnRobot driver for gripper control
+    # OnRobot Driver Node - FIXED: Updated parameters for proper 2FG7 control
     onrobot_driver_node = Node(
         package='onrobot_driver',
         executable='onrobot_driver_node',
@@ -71,19 +71,31 @@ def launch_setup(context, *args, **kwargs):
             'port': 502,
             'max_width': 0.075,    # 75mm max opening (total distance between fingers)
             'min_width': 0.035,    # 35mm min opening (total distance between fingers)
-            'max_force': 100.0,
+            'max_force': 140.0,    # Match the gripper's actual max force from manual
             'update_rate': 100.0,
             'simulation_mode': LaunchConfiguration('fake'),
+            'joint_name': 'left_finger_joint',  # Specify which joint to control
+            'command_timeout': 10.0,  # Timeout for gripper commands
         }]
     )
 
-    # FIXED: Removed gripper controller - using only OnRobot driver
+    # Gripper controller for simulation (only used in fake mode)
+    gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["onrobot_2fg7_gripper_controller", 
+                   "--controller-manager", "/controller_manager"],
+        output='screen',
+        condition=IfCondition(LaunchConfiguration('fake'))
+    )
+
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        onrobot_driver_node,  # Start OnRobot driver directly
+        onrobot_driver_node,
+        gripper_controller_spawner,
     ]
     
     return what_to_launch

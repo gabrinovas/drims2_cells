@@ -8,8 +8,7 @@ controller_manager:
     joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-    onrobot_2fg7_gripper_controller:
-      type: position_controllers/JointGroupPositionController
+    # REMOVED: onrobot_2fg7_gripper_controller - using driver instead
 
 # Arm controller
 joint_trajectory_controller:
@@ -33,18 +32,4 @@ joint_trajectory_controller:
     action_monitor_rate: 20.0
     action_name: follow_joint_trajectory
 
-# Gripper controller - FIXED: Proper configuration for 2FG7
-onrobot_2fg7_gripper_controller:
-  ros__parameters:
-    joints:
-      - left_finger_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    # Gripper-specific parameters for 35mm-75mm range
-    state_publish_rate: 50.0
-    allow_nonzero_velocity_at_trajectory_end: true
-    constraints:
-      goal_time: 5.0
+# REMOVED: gripper controller section - using driver instead

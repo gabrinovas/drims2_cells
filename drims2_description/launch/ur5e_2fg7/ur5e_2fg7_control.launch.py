@@ -89,11 +89,14 @@ def launch_setup(context, *args, **kwargs):
                     'max_force': 140.0,
                     'update_rate': 100.0,
                     'simulation_mode': LaunchConfiguration('fake'),
-                    'joint_name': 'left_finger_joint',
+                    'joint_name': '2fg7_left_finger_joint',
                     'command_timeout': 10.0,
                 }],
-                # Remap driver to publish to gripper_joint_states
-                remappings=[('/joint_states', '/gripper_joint_states')]
+                # CRITICAL: Ensure it publishes to gripper_joint_states
+                remappings=[
+                    ('/joint_states', '/gripper_joint_states'),  # Driver publishes here
+                    ('/gripper_action', '/gripper_action')       # Keep action topic
+                ]
             )
         ]
     )

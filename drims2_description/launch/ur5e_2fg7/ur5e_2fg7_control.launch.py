@@ -44,12 +44,15 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
     )
 
+    # Joint state broadcaster - publishes to arm_joint_states
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["joint_state_broadcaster",
                    "--controller-manager","/controller_manager"],
         output='screen',
+        # Remap the output topic
+        remappings=[('/joint_states', '/arm_joint_states')]
     )
 
     robot_state_publisher_node = Node(
@@ -59,7 +62,15 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # OnRobot Driver Node - with delay to ensure MoveIt is ready first
+    # Merged Joint State Publisher Node - from onrobot_driver package
+    merged_joint_state_publisher = Node(
+        package='onrobot_driver',
+        executable='merged_joint_state_publisher',
+        name='merged_joint_state_publisher',
+        output='screen'
+    )
+
+    # OnRobot Driver Node - with delay and publishes to gripper_joint_states
     onrobot_driver_node = TimerAction(
         period=5.0,  # Wait 5 seconds for other systems to initialize
         actions=[
@@ -80,7 +91,9 @@ def launch_setup(context, *args, **kwargs):
                     'simulation_mode': LaunchConfiguration('fake'),
                     'joint_name': 'left_finger_joint',
                     'command_timeout': 10.0,
-                }]
+                }],
+                # Remap driver to publish to gripper_joint_states
+                remappings=[('/joint_states', '/gripper_joint_states')]
             )
         ]
     )
@@ -90,6 +103,7 @@ def launch_setup(context, *args, **kwargs):
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
+        merged_joint_state_publisher,  # Add the merged publisher
         onrobot_driver_node,  # ONLY driver for gripper (with delay)
     ]
     

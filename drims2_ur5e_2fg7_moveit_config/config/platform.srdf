@@ -25,11 +25,11 @@
         <joint name="wrist_2_joint" value="-1.57"/>
         <joint name="wrist_3_joint" value="0"/>
     </group_state>
-    <!-- Update gripper group states for 35mm-75mm range -->
+    <!-- Update gripper group states for 35mm-70mm range -->
     <group_state name="open" group="gripper">
-        <!-- 75mm opening: each finger at 20mm from center -->
-        <joint name="left_finger_joint" value="0.020"/>
-        <joint name="right_finger_joint" value="-0.020"/>
+        <!-- 70mm opening: each finger at 20mm from center -->
+        <joint name="left_finger_joint" value="0.0175"/>
+        <joint name="right_finger_joint" value="-0.0175"/>
     </group_state>
     <group_state name="closed" group="gripper">
         <!-- 35mm opening: each finger at 0mm from center -->

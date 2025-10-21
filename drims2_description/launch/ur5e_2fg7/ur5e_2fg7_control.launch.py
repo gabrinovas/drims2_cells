@@ -69,7 +69,7 @@ def launch_setup(context, *args, **kwargs):
             'gripper_type': '2FG7',
             'ip_address': LaunchConfiguration('onrobot_ip'),
             'port': 502,
-            'max_width': 0.075,    # 75mm max opening (total distance between fingers)
+            'max_width': 0.070,    # 70mm max opening (total distance between fingers)
             'min_width': 0.035,    # 35mm min opening (total distance between fingers)
             'max_force': 140.0,    # Match the gripper's actual max force from manual
             'update_rate': 100.0,

@@ -59,34 +59,38 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description]
     )
 
-    # OnRobot Driver Node - ONLY using driver for gripper control
-    onrobot_driver_node = Node(
-        package='onrobot_driver',
-        executable='onrobot_driver_node',
-        name='onrobot_driver',
-        output='screen',
-        parameters=[{
-            'gripper_type': '2FG7',
-            'ip_address': LaunchConfiguration('onrobot_ip'),
-            'port': 502,
-            'max_width': 0.070,    # 70mm max opening (total distance between fingers)
-            'min_width': 0.035,    # 35mm min opening (total distance between fingers)
-            'max_force': 140.0,    # Match the gripper's actual max force from manual
-            'update_rate': 100.0,
-            'simulation_mode': LaunchConfiguration('fake'),
-            'joint_name': 'left_finger_joint',  # Specify which joint to control
-            'command_timeout': 10.0,  # Timeout for gripper commands
-        }]
+    # OnRobot Driver Node - with delay to ensure MoveIt is ready first
+    onrobot_driver_node = TimerAction(
+        period=5.0,  # Wait 5 seconds for other systems to initialize
+        actions=[
+            Node(
+                package='onrobot_driver',
+                executable='onrobot_driver_node',
+                name='onrobot_driver',
+                output='screen',
+                parameters=[{
+                    'gripper_type': '2FG7',
+                    'ip_address': LaunchConfiguration('onrobot_ip'),
+                    'port': 502,
+                    'max_width': 0.070,    # 70mm max opening
+                    'min_width': 0.035,    # 35mm min opening
+                    'initial_position': 0.055,  # 55mm initial opening
+                    'max_force': 140.0,
+                    'update_rate': 100.0,
+                    'simulation_mode': LaunchConfiguration('fake'),
+                    'joint_name': 'left_finger_joint',
+                    'command_timeout': 10.0,
+                }]
+            )
+        ]
     )
-
-    # REMOVED: gripper_controller_spawner - using only driver
 
     what_to_launch = [
         controller_manager_node,
         joint_state_broadcaster_spawner,
         joint_trajectory_controller,
         robot_state_publisher_node,
-        onrobot_driver_node,  # Only driver for gripper control
+        onrobot_driver_node,  # ONLY driver for gripper (with delay)
     ]
     
     return what_to_launch

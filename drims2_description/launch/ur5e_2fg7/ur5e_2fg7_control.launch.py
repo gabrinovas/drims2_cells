@@ -89,7 +89,7 @@ def launch_setup(context, *args, **kwargs):
                     'max_force': 140.0,
                     'update_rate': 100.0,
                     'simulation_mode': LaunchConfiguration('fake'),
-                    'joint_name': '2fg7_left_finger_joint',
+                    'joint_name': 'left_finger_joint',
                     'command_timeout': 10.0,
                 }],
                 # CRITICAL: Ensure it publishes to gripper_joint_states

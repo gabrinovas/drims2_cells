@@ -8,7 +8,7 @@ controller_manager:
     joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-    # REMOVED: onrobot_2fg7_gripper_controller - using driver instead
+    # REMOVED: onrobot_2fg7_gripper_controller - using onrobot_driver instead
 
 # Arm controller
 joint_trajectory_controller:

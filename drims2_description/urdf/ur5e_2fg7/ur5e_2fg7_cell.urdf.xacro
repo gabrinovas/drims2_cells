@@ -293,23 +293,6 @@
    xyz="0 0 1.2"
    size="${table_width} ${table_length} 0.01"/>
 
-   <!-- Second table safety barriers
-   <xacro:safety_barrier name="barrier_back_table2"
-   xyz="${-table_width/2 - 0.3} 0 0.3"
-   size="0.01 ${table_length} 0.8"/>
-
-   <xacro:safety_barrier name="barrier_left_table2"
-   xyz="0 ${-table_length/2 - 0.3} 0.3"
-   size="${table_width} 0.01 0.8"/>
-
-   <xacro:safety_barrier name="barrier_right_table2"
-   xyz="0 ${table_length/2 + 0.3} 0.3"
-   size="${table_width} 0.01 0.8"/>
-
-   <xacro:safety_barrier name="barrier_top_table2"
-   xyz="0 0 1.2"
-   size="${table_width} ${table_length} 0.01"/> -->
-
    <!-- MAIN ROBOT - This includes the complete UR5e robot -->
    <xacro:ur_robot
       name="$(arg name)"
@@ -372,30 +355,4 @@
       <child link="tip"/>
       <origin xyz="0 0 0.15" rpy="0 0 0"/>
    </joint>
-
-   <!-- ROS2 Control for gripper ONLY (UR robot has its own control in the macro) -->
-   <!-- <ros2_control name="onrobot_2fg7_gripper" type="system">
-      <hardware>
-         <plugin>mock_components/GenericSystem</plugin>
-         <param name="fake_sensor_commands">$(arg fake_sensor_commands)</param>
-         FIX: Force initial positions for gripper joints
-         FIX: Correct initial positions for gripper joints
-         <param name="state_initial_values">
-            left_finger_joint/position: 0.010  # Start at mid-position (55mm opening)
-            left_finger_joint/velocity: 0.0
-            right_finger_joint/position: -0.010  # Mirror of left finger
-            right_finger_joint/velocity: 0.0
-         </param>
-      </hardware>
-      <joint name="left_finger_joint">
-         <command_interface name="position"/>
-         <state_interface name="position"/>
-         <state_interface name="velocity"/>
-      </joint>
-      <joint name="right_finger_joint">
-         <command_interface name="position"/>
-         <state_interface name="position"/>
-         <state_interface name="velocity"/>
-      </joint>
-   </ros2_control> -->
 </robot>

@@ -85,7 +85,7 @@ joint_limits:
     has_position_limits: true
     has_velocity_limits: true
     max_effort: 100.0
-    max_position: 0.020
+    max_position: 0.0175
     max_velocity: 0.5
     min_position: 0.0
   right_finger_joint:
@@ -96,4 +96,4 @@ joint_limits:
     max_effort: 100.0
     max_position: 0.0
     max_velocity: 0.5
-    min_position: -0.020
+    min_position: -0.0175

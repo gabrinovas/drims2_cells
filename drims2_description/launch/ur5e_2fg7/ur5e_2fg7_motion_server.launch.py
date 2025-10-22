@@ -1,7 +1,7 @@
 # Copyright 2024 National Research Council STIIMA
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
+# you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
@@ -30,6 +30,12 @@ def generate_launch_description():
         description='Full path to the config file'
     )
 
+    gripper_type_arg = DeclareLaunchArgument(
+        'gripper_type',
+        default_value='onrobot_2fg7',
+        description='Gripper type: robotiq or onrobot_2fg7'
+    )
+
     motion_server_node = Node(
         package='drims2_motion_server',
         executable='motion_server',
@@ -37,10 +43,12 @@ def generate_launch_description():
         output='screen',
         parameters=[
             LaunchConfiguration('motion_server_config_path'),
+            {'gripper_type': LaunchConfiguration('gripper_type')}
         ]
     )
 
     return LaunchDescription([
         motion_server_config_arg,
+        gripper_type_arg,
         motion_server_node
     ])

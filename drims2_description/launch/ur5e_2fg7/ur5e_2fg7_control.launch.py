@@ -78,6 +78,16 @@ def launch_setup(context, *args, **kwargs):
         }]
     )
 
+    # Static transform for gripper joint states (FIX for MoveIt missing joint state)
+    gripper_joint_state_publisher = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='gripper_joint_state_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', '2fg7_base_link', 'left_finger_joint'],
+        output='screen',
+        condition=UnlessCondition(LaunchConfiguration('fake'))
+    )
+
     # REMOVED: onrobot_2fg7_gripper_controller spawner - using OnRobot driver instead
     
     what_to_launch = [
@@ -86,6 +96,7 @@ def launch_setup(context, *args, **kwargs):
         joint_trajectory_controller,
         robot_state_publisher_node,
         onrobot_driver_node,  # Start OnRobot driver directly
+        gripper_joint_state_publisher,  # Add static transform for gripper
     ]
     
     return what_to_launch

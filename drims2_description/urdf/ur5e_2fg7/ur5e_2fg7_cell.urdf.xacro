@@ -365,6 +365,13 @@
    <xacro:include filename="$(find onrobot_2fg7_gripper_description)/urdf/onrobot_2fg7.trans.xacro" />
    <xacro:gripper_transmission/>
 
+   <!-- Add joint state publisher for gripper joints to fix MoveIt warnings -->
+   <gazebo>
+     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+       <parameters>$(find drims2_description)/config/ur5e_2fg7/controllers.yaml</parameters>
+     </plugin>
+   </gazebo>
+
    <!-- End effector tip for MoveIt -->
    <link name="tip"/>
    <joint name="tool0_to_tip" type="fixed">

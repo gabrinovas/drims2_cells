@@ -79,6 +79,7 @@ joint_limits:
     max_velocity:  3.14
     min_position: -6.28
   # Update joint names to match actual gripper joints
+  # OnRobot 2FG7 gripper joints (passive joints for MoveIt)
   left_finger_joint:
     has_acceleration_limits: false
     has_effort_limits: true

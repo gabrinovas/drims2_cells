@@ -1,11 +1,11 @@
 repositories:
   abb_libs/abb_egm_rws_managers:
     type: git
-    url: https://github.com/MerlinLaboratory/abb_egm_rws_managers.git
+    url: https://github.com/gabrinovas/abb_egm_rws_managers.git
     version: master
   abb_libs/abb_libegm:
     type: git
-    url: https://github.com/ros-industrial/abb_libegm.git
+    url: https://github.com/gabrinovas/abb_libegm.git
     version: master
   abb_libs/abb_librws_2.0:
     type: git
@@ -13,77 +13,85 @@ repositories:
     version: marco-sg-control
   abb_libs/abb_ros2_msgs:
     type: git
-    url: https://github.com/gbartyzel/abb_ros2_msgs.git
+    url: https://github.com/gabrinovas/abb_ros2_msgs.git
     version: rolling
   abb_libs/abb_omnicore_ros2:
     type: git
     url: https://github.com/MerlinLaboratory/abb_omnicore_ros2.git
     version: cari
+  camera_aravis2:
+    type: git
+    url: https://github.com/gabrinovas/camera_aravis2.git
+    version: main
+  Modbus:
+    type: git
+    url: https://github.com/gabrinovas/modbus.git
+    version: master
   ros2_robotiq_gripper:
     type: git
-    url: https://github.com/PickNikRobotics/ros2_robotiq_gripper.git
+    url: https://github.com/gabrinovas/ros2_robotiq_gripper.git
     version: humble
-  serial:
-    type: git
-    url: https://github.com/tylerjw/serial.git
-    version: ros2
   robotiq_hande_driver:
     type: git
-    url: https://github.com/AGH-CEAI/robotiq_hande_driver.git
-    version: humble-devel
+    url: https://github.com/gabrinovas/robotiq_hande_driver.git
+    version: fix-humble-compilation
   robotiq_hande_description:
     type: git
-    url: https://github.com/CNR-STIIMA-IRAS/robotiq_hande_description.git
+    url: https://github.com/gabrinovas/robotiq_hande_description.git
     version: humble-devel
   robotiq_2f_urcap_adapter:
     type: git
-    url: https://github.com/CNR-STIIMA-IRAS/robotiq_2f_urcap_adapter.git
+    url: https://github.com/gabrinovas/robotiq_2f_urcap_adapter.git
     version: main
+  serial:
+    type: git
+    url: https://github.com/gabrinovas/serial.git
+    version: ros2
   tiago_pro/tiago_pro_moveit_config:
     type: git
-    url: https://github.com/CNR-STIIMA-IRAS/tiago_pro_moveit_config.git
+    url: https://github.com/gabrinovas/tiago_pro_moveit_config.git
     version: humble-devel
   tiago_pro/tiago_pro_robot:
     type: git
-    url: https://github.com/pal-robotics/tiago_pro_robot.git
+    url: https://github.com/gabrinovas/tiago_pro_robot.git
     version: humble-devel
   tiago_pro/tiago_pro_simulation:
     type: git
-    url: https://github.com/pal-robotics/tiago_pro_simulation.git
+    url: https://github.com/gabrinovas/tiago_pro_simulation.git
     version: humble-devel
   tiago_pro/launch_pal:
     type: git
-    url: https://github.com/pal-robotics/launch_pal.git
+    url: https://github.com/gabrinovas/launch_pal.git
     version: master
   tiago_pro/pal_pro_gripper:
     type: git
-    url: https://github.com/pal-robotics/pal_pro_gripper.git
+    url: https://github.com/gabrinovas/pal_pro_gripper.git
     version: humble-devel
   tiago_pro/pal_sea_arm:
     type: git
-    url: https://github.com/pal-robotics/pal_sea_arm.git
+    url: https://github.com/gabrinovas/pal_sea_arm.git
     version: humble-devel
   tiago_pro/pal_sea_arm_moveit_config:
     type: git
-    url: https://github.com/pal-robotics/pal_sea_arm_moveit_config.git
+    url: https://github.com/gabrinovas/pal_sea_arm_moveit_config.git
     version: humble-devel
   tiago_pro/realsense:
     type: git
-    url: https://github.com/pal-robotics-forks/realsense.git
+    url: https://github.com/gabrinovas/realsense.git
     version: alum-devel
   tiago_pro/realsense_simulation:
     type: git
-    url: https://github.com/pal-robotics/realsense_simulation.git
+    url: https://github.com/gabrinovas/realsense_simulation.git
     version: alum-devel
   tiago_pro/tiago_pro_head_robot:
     type: git
-    url: https://github.com/pal-robotics/tiago_pro_head_robot.git
+    url: https://github.com/gabrinovas/tiago_pro_head_robot.git
     version: humble-devel
   tiago_pro/pal_gazebo_worlds:
     type: git
-    url: https://github.com/pal-robotics/pal_gazebo_worlds.git
+    url: https://github.com/gabrinovas/pal_gazebo_worlds.git
     version: humble-devel
   tiago_pro/warehouse_ros_mongo:
     type: git
-    url: https://github.com/ros-planning/warehouse_ros_mongo.git
+    url: https://github.com/gabrinovas/warehouse_ros_mongo.git
     version: ros2

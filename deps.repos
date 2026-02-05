@@ -91,7 +91,7 @@ repositories:
     type: git
     url: https://github.com/gabrinovas/pal_gazebo_worlds.git
     version: humble-devel
-  tiago_pro/warehouse_ros_mongo:
+  warehouse_ros_mongo:
     type: git
     url: https://github.com/gabrinovas/warehouse_ros_mongo.git
     version: ros2

@@ -19,14 +19,6 @@ repositories:
     type: git
     url: https://github.com/MerlinLaboratory/abb_omnicore_ros2.git
     version: cari
-  camera_aravis2:
-    type: git
-    url: https://github.com/gabrinovas/camera_aravis2.git
-    version: main
-  Modbus:
-    type: git
-    url: https://github.com/gabrinovas/modbus.git
-    version: master
   ros2_robotiq_gripper:
     type: git
     url: https://github.com/gabrinovas/ros2_robotiq_gripper.git

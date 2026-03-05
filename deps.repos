@@ -67,14 +67,6 @@ repositories:
     type: git
     url: https://github.com/gabrinovas/pal_sea_arm_moveit_config.git
     version: humble-devel
-  tiago_pro/realsense:
-    type: git
-    url: https://github.com/gabrinovas/realsense.git
-    version: alum-devel
-  tiago_pro/realsense_simulation:
-    type: git
-    url: https://github.com/gabrinovas/realsense_simulation.git
-    version: alum-devel
   tiago_pro/tiago_pro_head_robot:
     type: git
     url: https://github.com/gabrinovas/tiago_pro_head_robot.git
